@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="946362e6-77ec-4d0a-b230-468245b98d65" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" path="$PROJECT_DIR$/../../All Users/golangSdk" />
+  <component name="ProjectId" id="1mV0AalSxZwm7YwyflkuZRd8ZYH" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="configurable.Global.GOPATH.is.expanded" value="true" />
+    <property name="configurable.Module.GOPATH.is.expanded" value="false" />
+    <property name="configurable.Project.GOPATH.is.expanded" value="true" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.goide.configuration.GoLibrariesConfigurableProvider" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\GoCode\graduate" />
+      <recent name="E:\GoCode\graduate\cron\configs" />
+      <recent name="E:\GoCode\graduate\cron\common\util\err" />
+      <recent name="E:\GoCode\graduate\cron\common" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\GoCode\graduate\cron\internal\model\ent_ex" />
+      <recent name="E:\GoCode\graduate" />
+      <recent name="E:\GoCode\graduate\cron\common\util\paladin" />
+      <recent name="E:\GoCode\graduate\cron\common\util\err" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Build.user">
+    <configuration name="graduate" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true">
+      <module name="graduate" />
+      <working_directory value="$PROJECT_DIR$" />
+      <parameters value="-conf=E:\GoCode\graduate\cron\configs" />
+      <kind value="PACKAGE" />
+      <filePath value="$PROJECT_DIR$/cron/cmd/main.go" />
+      <package value="graduate/cron/cmd" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="user" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true">
+      <module name="graduate" />
+      <working_directory value="$PROJECT_DIR$" />
+      <parameters value="-conf=E:\GoCode\graduate\user\configs" />
+      <kind value="PACKAGE" />
+      <filePath value="$PROJECT_DIR$/user/cmd/main.go" />
+      <package value="graduate/user/cmd" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestJob in graduate/cron/internal/dao/ent (1)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="graduate" />
+      <working_directory value="$PROJECT_DIR$/cron/internal/dao/ent" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="graduate/cron/internal/dao/ent" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTestJob\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestJob in graduate/cron/internal/dao/ent" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="graduate" />
+      <working_directory value="$PROJECT_DIR$/cron/internal/dao/ent" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="graduate/cron/internal/dao/ent" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTestJob\E$" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Go Build.graduate" />
+      <item itemvalue="Go Build.user" />
+      <item itemvalue="Go Test.TestJob in graduate/cron/internal/dao/ent" />
+      <item itemvalue="Go Test.TestJob in graduate/cron/internal/dao/ent (1)" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.user" />
+        <item itemvalue="Go Build.graduate" />
+        <item itemvalue="Go Test.TestJob in graduate/cron/internal/dao/ent (1)" />
+        <item itemvalue="Go Test.TestJob in graduate/cron/internal/dao/ent" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>true</integration-enabled>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="752" y="373" key="#Go_Modules" timestamp="1609604403047">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="752" y="373" key="#Go_Modules/1920.0.1536.864/0.0.1920.1080@0.0.1920.1080" timestamp="1609604403047" />
+    <state x="477" y="289" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1610011795687">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="477" y="289" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.1536.864/0.0.1920.1080@0.0.1920.1080" timestamp="1610011795687" />
+    <state x="702" y="340" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1609683228376">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="702" y="340" key="#com.intellij.fileTypes.FileTypeChooser/1920.0.1536.864/0.0.1920.1080@0.0.1920.1080" timestamp="1609683228376" />
+    <state x="740" y="294" key="FileChooserDialogImpl" timestamp="1610005271676">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="740" y="294" key="FileChooserDialogImpl/1920.0.1536.864/0.0.1920.1080@0.0.1920.1080" timestamp="1610005271676" />
+    <state width="1877" height="231" key="GridCell.Tab.0.bottom" timestamp="1610168056629">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1877" height="363" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1609780351652" />
+    <state width="1877" height="231" key="GridCell.Tab.0.bottom/1920.0.1536.864/0.0.1920.1080@0.0.1920.1080" timestamp="1610168056629" />
+    <state width="1493" height="231" key="GridCell.Tab.0.bottom/1920.0.1536.864/0.0.1920.1080@1920.0.1536.864" timestamp="1610126261182" />
+    <state width="1877" height="231" key="GridCell.Tab.0.center" timestamp="1610168056629">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1877" height="363" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1609780351652" />
+    <state width="1877" height="231" key="GridCell.Tab.0.center/1920.0.1536.864/0.0.1920.1080@0.0.1920.1080" timestamp="1610168056629" />
+    <state width="1493" height="231" key="GridCell.Tab.0.center/1920.0.1536.864/0.0.1920.1080@1920.0.1536.864" timestamp="1610126261182" />
+    <state width="1877" height="231" key="GridCell.Tab.0.left" timestamp="1610168056629">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1877" height="363" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1609780351652" />
+    <state width="1877" height="231" key="GridCell.Tab.0.left/1920.0.1536.864/0.0.1920.1080@0.0.1920.1080" timestamp="1610168056629" />
+    <state width="1493" height="231" key="GridCell.Tab.0.left/1920.0.1536.864/0.0.1920.1080@1920.0.1536.864" timestamp="1610126261182" />
+    <state width="1877" height="231" key="GridCell.Tab.0.right" timestamp="1610168056629">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1877" height="363" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1609780351652" />
+    <state width="1877" height="231" key="GridCell.Tab.0.right/1920.0.1536.864/0.0.1920.1080@0.0.1920.1080" timestamp="1610168056629" />
+    <state width="1493" height="231" key="GridCell.Tab.0.right/1920.0.1536.864/0.0.1920.1080@1920.0.1536.864" timestamp="1610126261182" />
+    <state width="1493" height="289" key="GridCell.Tab.1.bottom" timestamp="1610168054616">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1877" height="363" key="GridCell.Tab.1.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1609780351652" />
+    <state width="1493" height="289" key="GridCell.Tab.1.bottom/1920.0.1536.864/0.0.1920.1080@0.0.1920.1080" timestamp="1610168054616" />
+    <state width="1493" height="289" key="GridCell.Tab.1.bottom/1920.0.1536.864/0.0.1920.1080@1920.0.1536.864" timestamp="1610126221972" />
+    <state width="1493" height="289" key="GridCell.Tab.1.center" timestamp="1610168054616">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1877" height="363" key="GridCell.Tab.1.center/0.0.1920.1080@0.0.1920.1080" timestamp="1609780351652" />
+    <state width="1493" height="289" key="GridCell.Tab.1.center/1920.0.1536.864/0.0.1920.1080@0.0.1920.1080" timestamp="1610168054616" />
+    <state width="1493" height="289" key="GridCell.Tab.1.center/1920.0.1536.864/0.0.1920.1080@1920.0.1536.864" timestamp="1610126221972" />
+    <state width="1493" height="289" key="GridCell.Tab.1.left" timestamp="1610168054616">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1877" height="363" key="GridCell.Tab.1.left/0.0.1920.1080@0.0.1920.1080" timestamp="1609780351652" />
+    <state width="1493" height="289" key="GridCell.Tab.1.left/1920.0.1536.864/0.0.1920.1080@0.0.1920.1080" timestamp="1610168054616" />
+    <state width="1493" height="289" key="GridCell.Tab.1.left/1920.0.1536.864/0.0.1920.1080@1920.0.1536.864" timestamp="1610126221972" />
+    <state width="1493" height="289" key="GridCell.Tab.1.right" timestamp="1610168054616">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1877" height="363" key="GridCell.Tab.1.right/0.0.1920.1080@0.0.1920.1080" timestamp="1609780351652" />
+    <state width="1493" height="289" key="GridCell.Tab.1.right/1920.0.1536.864/0.0.1920.1080@0.0.1920.1080" timestamp="1610168054616" />
+    <state width="1493" height="289" key="GridCell.Tab.1.right/1920.0.1536.864/0.0.1920.1080@1920.0.1536.864" timestamp="1610126221972" />
+    <state x="461" y="184" key="SettingsEditor" timestamp="1609604312128">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="461" y="184" key="SettingsEditor/1920.0.1536.864/0.0.1920.1080@0.0.1920.1080" timestamp="1609604312128" />
+    <state width="498" height="446" key="SwitcherDM" timestamp="1610204647758">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="498" height="446" key="SwitcherDM/1920.0.1536.864/0.0.1920.1080@0.0.1920.1080" timestamp="1610204647758" />
+    <state x="859" y="426" width="336" height="250" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1609861407684">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="859" y="426" width="336" height="250" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/1920.0.1536.864/0.0.1920.1080@0.0.1920.1080" timestamp="1609861407684" />
+    <state x="803" y="310" width="649" height="459" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1609860215344">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="803" y="310" width="649" height="459" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/1920.0.1536.864/0.0.1920.1080@0.0.1920.1080" timestamp="1609860215344" />
+    <state x="661" y="138" width="736" height="804" key="find.popup" timestamp="1609866010416">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="661" y="138" width="736" height="804" key="find.popup/1920.0.1536.864/0.0.1920.1080@0.0.1920.1080" timestamp="1609866010416" />
+    <state x="623" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1610206809679">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="623" y="235" width="672" height="678" key="search.everywhere.popup/1920.0.1536.864/0.0.1920.1080@0.0.1920.1080" timestamp="1610206809679" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/cron/internal/dao/ent/job_test.go</url>
+          <line>22</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/cron/internal/server/http/job.go</url>
+          <line>20</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/user/internal/service/user.go</url>
+          <line>11</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/user/internal/server/http/server.go</url>
+          <line>71</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
