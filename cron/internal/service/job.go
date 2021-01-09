@@ -53,6 +53,7 @@ func (svc *Service) SwitchJobStatus(ctx context.Context, id, opt int) error {
 			return err
 		}
 		svc.cron.Remove(ecron.EntryID(id))
+
 	case ent_ex.JobRunning:
 		if err := svc.ent.StartJob(ctx, id); err != nil {
 			log.Error("start job err: (%+v)", err)
