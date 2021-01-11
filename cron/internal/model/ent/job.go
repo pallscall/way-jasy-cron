@@ -231,15 +231,3 @@ func (j *Job) Validate() error {
 	}
 	return nil
 }
-
-func (j *Job) Run() {
-
-}
-
-func (j *Job) EntryID() ecron.EntryID{
-	return ecron.EntryID(j.ID)
-}
-
-func (j *Job) GetSpec() string{
-	return j.Spec
-}

@@ -1,27 +1,29 @@
 package http
 
 import (
-	"github.com/go-kratos/kratos/pkg/ecode"
 	bm "github.com/go-kratos/kratos/pkg/net/http/blademaster"
+	xecode "way-jasy-cron/user/ecode"
 )
 
-const _session = "access_key"
+const (
+	_session = "access_key"
+	_openSession = "wj_cron"
+)
 
-func verify(ctx *bm.Context){
-	s := ctx.Request.Header.Get(_session)
-	if s == "" {
-		ctx.JSON(nil, ecode.Unauthorized)
+func openVerify(ctx *bm.Context) {
+	s := ctx.Request.Header.Get(_openSession)
+	if s == "" || s == "null"{
+		ctx.JSON(nil, xecode.InLegalOpt)
 		ctx.Abort()
-		return
 	}
-	ctx.JSON(nil, nil)
+	return
 }
 
 func verifyLogin(ctx *bm.Context) {
-	s := ctx.Request.Header.Get(_session)
+	s := ctx.Request.Header.Get(_openSession)
 	if err := svc.Verify(ctx, s); err != nil {
 		ctx.JSON(nil, err)
 		ctx.Abort()
 	}
-	return
+	ctx.JSON(nil, nil)
 }

@@ -53,6 +53,7 @@ func (m *Manager) ListJob(ctx context.Context, req *ent_ex.ListJobOptions) (jobs
 		return nil, 0, err
 	}
 	jobs, err = m.Client.Job.Query().Where(job.StatusNEQ(int(ent_ex.JobDelete))).Where(job.NameContains(req.Name)).
+		Where(job.CreatorEQ(req.Creator)).
 		Offset(req.OffSet()).Limit(req.Limit()).Order(ent.Desc(job.FieldID)).All(ctx)
 	if err != nil {
 		log.Error("list jobs err:(%v)", err)
@@ -63,5 +64,5 @@ func (m *Manager) ListJob(ctx context.Context, req *ent_ex.ListJobOptions) (jobs
 
 
 func (m *Manager) ListAllRunningJobs(ctx context.Context) (jobs []*ent.Job, err error) {
-	return m.Client.Job.Query().Where(job.StatusNEQ(int(ent_ex.JobDelete))).All(ctx)
+	return m.Client.Job.Query().Where(job.StatusEQ(int(ent_ex.JobRunning))).All(ctx)
 }

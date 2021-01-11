@@ -28,9 +28,6 @@ func New() *Service{
 
 }
 
-func (svc *Service) InitJob() {
-	//svc.ent.
-}
 // Ping ping the resource.
 func (s *Service) Ping(ctx context.Context) error {
 	return s.mysql.Ping(ctx)

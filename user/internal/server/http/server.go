@@ -42,11 +42,14 @@ var (
 
 func initRouter(e *bm.Engine) {
 	e.Ping(ping)
-	g := e.Group("/account",verify)
+	g := e.Group("/account",openVerify)
 	{
 		g.POST("/login", verifyLogin)
 		g.POST("/register", register)
-		g.POST("/test", test)
+	}
+	t := e.Group("/test")
+	{
+		t.POST("", test)
 	}
 }
 
@@ -75,11 +78,11 @@ func MustStart() {
 		initRouter(e)
 		utilerr.Check(e.Start())
 		svc = service.New()
-		svc.InitJob()
 	}()
 	wg.Wait()
 }
 
 func test(ctx *bm.Context) {
+	log.Info("ttttttttttttttttttttttttttttttest",1)
 	ctx.JSON(nil, nil)
 }

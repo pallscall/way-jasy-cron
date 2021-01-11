@@ -31,9 +31,10 @@ func (svc *Service) UpdateJob(ctx context.Context, job *ent.Job) error {
 	if err != nil {
 		log.Error("CreateJob err: (%+v)", err)
 	}
-	svc.cron.Remove(job.EntryID())
+	j := svc.acquireJobExecutor(job)
+	svc.cron.Remove(j.EntryID())
 	if ent_ex.JobStatus(job.Status) == ent_ex.JobRunning {
-		svc.cron.AddJob(job)
+		svc.cron.AddJob(j)
 	}
 	return err
 }
@@ -64,7 +65,7 @@ func (svc *Service) SwitchJobStatus(ctx context.Context, id, opt int) error {
 			log.Error("method: SwitchJobStatus#job QueryJobByID err:", err)
 			return err
 		}
-		svc.cron.AddJob(j)
+		_, err = svc.cron.AddJob(svc.acquireJobExecutor(j))
 	default:
 		return ecode.InvalidOption
 	}
@@ -85,4 +86,24 @@ func (svc *Service) ListJob(ctx context.Context, req *ent_ex.ListJobReq) (*ent_e
 			PS:    req.PS,
 		},
 	}, nil
+}
+
+func (svc *Service) InitJob() error{
+	jobs, err := svc.ent.ListAllRunningJobs(context.TODO())
+	if err != nil {
+		log.Error("InitJob err:", err)
+		return err
+	}
+	for _, job := range jobs {
+		if _, err := svc.cron.AddJob(svc.acquireJobExecutor(job)); err != nil {
+			log.Error("AddJob err:", err)
+			return err
+		}
+	}
+	svc.cron.Start()
+	return nil
+}
+
+func (svc *Service) acquireJobExecutor(job *ent.Job) *ent_ex.JobExecutor{
+	return svc.jobex.Create(job, svc.SwitchJobStatus, svc.http)
 }

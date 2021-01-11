@@ -3,6 +3,7 @@ package http
 import (
 	"github.com/go-kratos/kratos/pkg/conf/paladin"
 	"github.com/go-kratos/kratos/pkg/net/rpc/warden"
+	"way-jasy-cron/common/middleware"
 	utilerr "way-jasy-cron/common/util/err"
 	"way-jasy-cron/cron/internal/service"
 	"net/http"
@@ -42,7 +43,7 @@ var (
 
 func initRouter(e *bm.Engine) {
 	e.Ping(ping)
-	g := e.Group("/cron")
+	g := e.Group("/cron",middleware.Verify)
 	{
 		g.GET("", listJob)
 		g.GET("/query", queryJob)

@@ -2,11 +2,13 @@ package service
 
 import (
 	"context"
-	log "github.com/sirupsen/logrus"
+	"net/http"
+	"sync"
 	"way-jasy-cron/common/ecron"
 	"way-jasy-cron/cron/internal/dao/ent"
 	"way-jasy-cron/cron/internal/dao/mysql"
-	"sync"
+	"way-jasy-cron/cron/internal/model/ent_ex"
+
 	//"github.com/google/wire"
 )
 
@@ -17,6 +19,8 @@ type Service struct {
 	ent         *ent.Manager
 	mysql		*mysql.Manager
 	cron        *ecron.Cron
+	http        *http.Client
+	jobex       *ent_ex.Manager
 	stop        chan bool
 	wg          sync.WaitGroup
 }
@@ -27,24 +31,13 @@ func New() *Service{
 		ent:     ent.New(),
 		cron:    ecron.New(),
 		mysql:   mysql.New(),
+		jobex:   ent_ex.New(),
+		http:    http.DefaultClient,
 		stop:    make(chan bool, 1),
 	}
 }
 
-func (svc *Service) InitJob() error{
-	jobs, err := svc.ent.ListAllRunningJobs(context.TODO())
-	if err != nil {
-		log.Error("InitJob err:", err)
-		return err
-	}
-	for _, job := range jobs {
-		if _, err := svc.cron.AddJob(job); err != nil {
-			log.Error("AddJob err:", err)
-			return err
-		}
-	}
-	return nil
-}
+
 // Ping ping the resource.
 func (s *Service) Ping(ctx context.Context) error {
 	return s.mysql.Ping(ctx)
