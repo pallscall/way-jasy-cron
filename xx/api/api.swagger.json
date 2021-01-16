@@ -16,9 +16,9 @@
         "application/json"
     ],
     "paths": {
-        "/demo.service.v1.Demo/Ping": {
+        "/demo.service.v1.Job/Ping": {
             "get": {
-                "summary": "/demo.service.v1.Demo/Ping",
+                "summary": "/demo.service.v1.Job/Ping",
                 "responses": {
                     "200": {
                         "description": "A successful response.",
@@ -39,13 +39,13 @@
                     }
                 },
                 "tags": [
-                    "demo.service.v1.Demo"
+                    "demo.service.v1.Job"
                 ]
             }
         },
-        "/demo.service.v1.Demo/SayHello": {
+        "/demo.service.v1.Job/SayHello": {
             "get": {
-                "summary": "/demo.service.v1.Demo/SayHello",
+                "summary": "/demo.service.v1.Job/SayHello",
                 "responses": {
                     "200": {
                         "description": "A successful response.",
@@ -74,7 +74,7 @@
                     }
                 ],
                 "tags": [
-                    "demo.service.v1.Demo"
+                    "demo.service.v1.Job"
                 ]
             }
         },
@@ -109,7 +109,7 @@
                     }
                 ],
                 "tags": [
-                    "demo.service.v1.Demo"
+                    "demo.service.v1.Job"
                 ]
             }
         }

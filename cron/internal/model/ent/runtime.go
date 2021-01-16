@@ -4,6 +4,7 @@ package ent
 
 import (
 	"way-jasy-cron/cron/internal/model/ent/job"
+	"way-jasy-cron/cron/internal/model/ent/machine"
 	"way-jasy-cron/cron/internal/model/ent/schema"
 )
 
@@ -61,4 +62,38 @@ func init() {
 	jobDescID := jobFields[0].Descriptor()
 	// job.IDValidator is a validator for the "id" field. It is called by the builders before save.
 	job.IDValidator = jobDescID.Validators[0].(func(int) error)
+	machineFields := schema.Machine{}.Fields()
+	_ = machineFields
+	// machineDescHost is the schema descriptor for host field.
+	machineDescHost := machineFields[1].Descriptor()
+	// machine.DefaultHost holds the default value on creation for the host field.
+	machine.DefaultHost = machineDescHost.Default.(string)
+	// machineDescPort is the schema descriptor for port field.
+	machineDescPort := machineFields[2].Descriptor()
+	// machine.DefaultPort holds the default value on creation for the port field.
+	machine.DefaultPort = machineDescPort.Default.(int)
+	// machineDescUsername is the schema descriptor for username field.
+	machineDescUsername := machineFields[3].Descriptor()
+	// machine.DefaultUsername holds the default value on creation for the username field.
+	machine.DefaultUsername = machineDescUsername.Default.(string)
+	// machineDescPassword is the schema descriptor for password field.
+	machineDescPassword := machineFields[4].Descriptor()
+	// machine.DefaultPassword holds the default value on creation for the password field.
+	machine.DefaultPassword = machineDescPassword.Default.(string)
+	// machineDescComment is the schema descriptor for comment field.
+	machineDescComment := machineFields[5].Descriptor()
+	// machine.DefaultComment holds the default value on creation for the comment field.
+	machine.DefaultComment = machineDescComment.Default.(string)
+	// machineDescCommand is the schema descriptor for command field.
+	machineDescCommand := machineFields[6].Descriptor()
+	// machine.DefaultCommand holds the default value on creation for the command field.
+	machine.DefaultCommand = machineDescCommand.Default.(string)
+	// machineDescStatus is the schema descriptor for status field.
+	machineDescStatus := machineFields[7].Descriptor()
+	// machine.DefaultStatus holds the default value on creation for the status field.
+	machine.DefaultStatus = machineDescStatus.Default.(int)
+	// machineDescID is the schema descriptor for id field.
+	machineDescID := machineFields[0].Descriptor()
+	// machine.IDValidator is a validator for the "id" field. It is called by the builders before save.
+	machine.IDValidator = machineDescID.Validators[0].(func(int) error)
 }

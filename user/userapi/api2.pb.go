@@ -3,7 +3,7 @@
 
 // package 命名使用 {appid}.{version} 的方式, version 形如 v1, v2 ..
 
-package api
+package userapi
 
 import (
 	context "context"
@@ -43,7 +43,7 @@ func (m *LoginReq) Reset()         { *m = LoginReq{} }
 func (m *LoginReq) String() string { return proto.CompactTextString(m) }
 func (*LoginReq) ProtoMessage()    {}
 func (*LoginReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_00212fb1f9d3bf1c, []int{0}
+	return fileDescriptor_592802a36db5ccc7, []int{0}
 }
 func (m *LoginReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -83,7 +83,7 @@ func (m *LoginResp) Reset()         { *m = LoginResp{} }
 func (m *LoginResp) String() string { return proto.CompactTextString(m) }
 func (*LoginResp) ProtoMessage()    {}
 func (*LoginResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_00212fb1f9d3bf1c, []int{1}
+	return fileDescriptor_592802a36db5ccc7, []int{1}
 }
 func (m *LoginResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -113,34 +113,35 @@ func (m *LoginResp) XXX_DiscardUnknown() {
 var xxx_messageInfo_LoginResp proto.InternalMessageInfo
 
 func init() {
-	proto.RegisterType((*LoginReq)(nil), "demo.service.v1.LoginReq")
-	proto.RegisterType((*LoginResp)(nil), "demo.service.v1.LoginResp")
+	proto.RegisterType((*LoginReq)(nil), "demo.service.v2.LoginReq")
+	proto.RegisterType((*LoginResp)(nil), "demo.service.v2.LoginResp")
 }
 
-func init() { proto.RegisterFile("api2.proto", fileDescriptor_00212fb1f9d3bf1c) }
+func init() { proto.RegisterFile("api2.proto", fileDescriptor_592802a36db5ccc7) }
 
-var fileDescriptor_00212fb1f9d3bf1c = []byte{
-	// 307 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x90, 0xbf, 0x4e, 0x3a, 0x41,
-	0x10, 0xc7, 0xb9, 0x1f, 0xf9, 0xf1, 0x67, 0x2d, 0x4c, 0xae, 0x82, 0xd3, 0x1c, 0xb8, 0x86, 0x68,
-	0xe3, 0x12, 0xb1, 0x23, 0xd1, 0x02, 0x62, 0x63, 0xac, 0x28, 0xed, 0xf6, 0xb8, 0x61, 0xdd, 0x84,
-	0xdb, 0x59, 0x76, 0xf7, 0x30, 0xbe, 0x84, 0xb5, 0x8f, 0x44, 0xe9, 0x13, 0x10, 0xc5, 0xce, 0x92,
-	0x27, 0x30, 0xd9, 0x3b, 0x34, 0x31, 0xda, 0xed, 0xcc, 0x67, 0x3e, 0xdf, 0xcc, 0x0e, 0x69, 0x72,
-	0x2d, 0x99, 0x36, 0xe8, 0x30, 0xdc, 0x4f, 0x21, 0x43, 0x66, 0xc1, 0x2c, 0xe5, 0x14, 0xd8, 0xf2,
-	0x3c, 0x3a, 0x13, 0xd2, 0xdd, 0xe7, 0x09, 0x9b, 0x62, 0xd6, 0x17, 0x28, 0xb0, 0xef, 0xe7, 0x92,
-	0x7c, 0xe6, 0x2b, 0x5f, 0xf8, 0x57, 0xe1, 0x47, 0x07, 0x02, 0x51, 0xcc, 0xe1, 0x7b, 0x0a, 0x32,
-	0xed, 0x1e, 0x4b, 0x78, 0x58, 0x42, 0xae, 0x65, 0x9f, 0x2b, 0x85, 0x8e, 0x3b, 0x89, 0xca, 0x16,
-	0x94, 0x3e, 0x05, 0xa4, 0x71, 0x8b, 0x42, 0xaa, 0x09, 0x2c, 0xc2, 0x31, 0x69, 0xe4, 0x16, 0x8c,
-	0xe2, 0x19, 0xb4, 0x82, 0x6e, 0x70, 0xda, 0x1c, 0x9d, 0x6c, 0xd7, 0x9d, 0xe3, 0x19, 0x9a, 0x6c,
-	0x48, 0x77, 0x84, 0x76, 0x97, 0x7c, 0x2e, 0x53, 0xee, 0x60, 0x48, 0x0d, 0x2c, 0x72, 0x69, 0x20,
-	0xa5, 0x93, 0x2f, 0x31, 0xbc, 0x24, 0x35, 0xcd, 0xad, 0x7d, 0x48, 0x5b, 0xff, 0x7c, 0x44, 0x6f,
-	0xbb, 0xee, 0x1c, 0x15, 0x11, 0x45, 0xff, 0xf7, 0x80, 0x52, 0xa2, 0x03, 0xd2, 0x2c, 0xf7, 0xb1,
-	0x3a, 0xec, 0x91, 0xfa, 0x18, 0x95, 0x03, 0xe5, 0xca, 0x7d, 0xf6, 0x3e, 0xd6, 0x9d, 0xfa, 0xb4,
-	0x68, 0x4d, 0x76, 0x6c, 0x70, 0x4d, 0xaa, 0x37, 0x98, 0x84, 0x57, 0xe4, 0xbf, 0x57, 0xc3, 0x36,
-	0xfb, 0x71, 0x50, 0xb6, 0xfb, 0x62, 0x14, 0xfd, 0x85, 0xac, 0x1e, 0xb5, 0x57, 0x6f, 0x71, 0x65,
-	0xb5, 0x89, 0x83, 0x97, 0x4d, 0x1c, 0xbc, 0x6e, 0xe2, 0xe0, 0xf9, 0x3d, 0xae, 0xdc, 0x55, 0xb9,
-	0x96, 0x49, 0xcd, 0x5f, 0xeb, 0xe2, 0x33, 0x00, 0x00, 0xff, 0xff, 0xe0, 0xde, 0x0f, 0x93, 0xb5,
-	0x01, 0x00, 0x00,
+var fileDescriptor_592802a36db5ccc7 = []byte{
+	// 332 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x90, 0xbf, 0x4a, 0x33, 0x41,
+	0x14, 0xc5, 0xb3, 0xe1, 0x23, 0x7f, 0x26, 0x7c, 0x08, 0x6b, 0x13, 0x57, 0xdd, 0xc4, 0x91, 0xa0,
+	0x8d, 0xbb, 0xb0, 0x76, 0x01, 0x9b, 0xa4, 0xb5, 0x0a, 0xc4, 0xc2, 0x42, 0x98, 0x64, 0x6f, 0xd6,
+	0x81, 0xdd, 0xb9, 0x93, 0x99, 0xd9, 0x88, 0xad, 0x0f, 0x60, 0x63, 0xe3, 0x23, 0xa5, 0x14, 0xec,
+	0x83, 0x46, 0x2b, 0xcb, 0x3c, 0x81, 0x64, 0x77, 0xa3, 0x20, 0xda, 0xcd, 0xdc, 0xdf, 0x39, 0x87,
+	0x7b, 0x2e, 0x21, 0x4c, 0xf2, 0xc0, 0x93, 0x0a, 0x0d, 0xda, 0x5b, 0x21, 0x24, 0xe8, 0x69, 0x50,
+	0x33, 0x3e, 0x06, 0x6f, 0x16, 0x38, 0x27, 0x11, 0x37, 0xd7, 0xe9, 0xc8, 0x1b, 0x63, 0xe2, 0x47,
+	0x18, 0xa1, 0x9f, 0xe9, 0x46, 0xe9, 0x24, 0xfb, 0x65, 0x9f, 0xec, 0x95, 0xfb, 0x9d, 0xdd, 0x08,
+	0x31, 0x8a, 0xe1, 0x5b, 0x05, 0x89, 0x34, 0xb7, 0x05, 0xdc, 0x2b, 0x20, 0x93, 0xdc, 0x67, 0x42,
+	0xa0, 0x61, 0x86, 0xa3, 0xd0, 0x39, 0xa5, 0xf7, 0x16, 0xa9, 0x9d, 0x63, 0xc4, 0xc5, 0x00, 0xa6,
+	0x76, 0x9f, 0xd4, 0x52, 0x0d, 0x4a, 0xb0, 0x04, 0x9a, 0x56, 0xdb, 0x3a, 0xae, 0xf7, 0x8e, 0x56,
+	0x8b, 0xd6, 0xe1, 0x04, 0x55, 0xd2, 0xa5, 0x1b, 0x42, 0xdb, 0x33, 0x16, 0xf3, 0x90, 0x19, 0xe8,
+	0x52, 0x05, 0xd3, 0x94, 0x2b, 0x08, 0xe9, 0xe0, 0xcb, 0x68, 0x9f, 0x91, 0x8a, 0x64, 0x5a, 0xdf,
+	0x84, 0xcd, 0x72, 0x16, 0xd1, 0x59, 0x2d, 0x5a, 0x07, 0x79, 0x44, 0x3e, 0xff, 0x3d, 0xa0, 0x30,
+	0xd1, 0x80, 0xd4, 0x8b, 0x7d, 0xb4, 0xb4, 0x3b, 0xa4, 0xda, 0x47, 0x61, 0x40, 0x98, 0x62, 0x9f,
+	0xc6, 0xc7, 0xa2, 0x55, 0x1d, 0xe7, 0xa3, 0xc1, 0x86, 0x05, 0x57, 0xe4, 0xdf, 0x50, 0x83, 0xb2,
+	0x2f, 0x8a, 0x2e, 0x43, 0x15, 0xdb, 0x3b, 0xde, 0x8f, 0xa3, 0x7a, 0x9b, 0x9a, 0x8e, 0xf3, 0x17,
+	0xd2, 0x92, 0x6e, 0xdf, 0x3d, 0xbf, 0x3f, 0x94, 0xff, 0xdb, 0x0d, 0x7f, 0x5d, 0xc8, 0x8f, 0xd7,
+	0xa0, 0xb7, 0x3f, 0x7f, 0x75, 0x4b, 0xf3, 0xa5, 0x6b, 0x3d, 0x2d, 0x5d, 0xeb, 0x65, 0xe9, 0x5a,
+	0x8f, 0x6f, 0x6e, 0xe9, 0xb2, 0xba, 0x56, 0x30, 0xc9, 0x47, 0x95, 0xec, 0x94, 0xa7, 0x9f, 0x01,
+	0x00, 0x00, 0xff, 0xff, 0x9c, 0xba, 0xd8, 0x76, 0xd3, 0x01, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -151,72 +152,72 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// JobClient is the client API for Job service.
+// UserClient is the client API for User service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type JobClient interface {
-	Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
+type UserClient interface {
+	LoginUrl(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
 }
 
-type jobClient struct {
+type userClient struct {
 	cc *grpc.ClientConn
 }
 
-func NewJobClient(cc *grpc.ClientConn) JobClient {
-	return &jobClient{cc}
+func NewUserClient(cc *grpc.ClientConn) UserClient {
+	return &userClient{cc}
 }
 
-func (c *jobClient) Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error) {
+func (c *userClient) LoginUrl(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error) {
 	out := new(LoginResp)
-	err := c.cc.Invoke(ctx, "/demo.service.v1.Job/Login", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/demo.service.v2.User/LoginUrl", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// JobServer is the server API for Job service.
-type JobServer interface {
-	Login(context.Context, *LoginReq) (*LoginResp, error)
+// UserServer is the server API for User service.
+type UserServer interface {
+	LoginUrl(context.Context, *LoginReq) (*LoginResp, error)
 }
 
-// UnimplementedJobServer can be embedded to have forward compatible implementations.
-type UnimplementedJobServer struct {
+// UnimplementedUserServer can be embedded to have forward compatible implementations.
+type UnimplementedUserServer struct {
 }
 
-func (*UnimplementedJobServer) Login(ctx context.Context, req *LoginReq) (*LoginResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
+func (*UnimplementedUserServer) LoginUrl(ctx context.Context, req *LoginReq) (*LoginResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LoginUrl not implemented")
 }
 
-func RegisterJobServer(s *grpc.Server, srv JobServer) {
-	s.RegisterService(&_Job_serviceDesc, srv)
+func RegisterUserServer(s *grpc.Server, srv UserServer) {
+	s.RegisterService(&_User_serviceDesc, srv)
 }
 
-func _Job_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _User_LoginUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(LoginReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(JobServer).Login(ctx, in)
+		return srv.(UserServer).LoginUrl(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/demo.service.v1.Job/Login",
+		FullMethod: "/demo.service.v2.User/LoginUrl",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServer).Login(ctx, req.(*LoginReq))
+		return srv.(UserServer).LoginUrl(ctx, req.(*LoginReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _Job_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "demo.service.v1.Job",
-	HandlerType: (*JobServer)(nil),
+var _User_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "demo.service.v2.User",
+	HandlerType: (*UserServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Login",
-			Handler:    _Job_Login_Handler,
+			MethodName: "LoginUrl",
+			Handler:    _User_LoginUrl_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -250,14 +251,14 @@ func (m *LoginReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if len(m.Passwd) > 0 {
 		i -= len(m.Passwd)
 		copy(dAtA[i:], m.Passwd)
-		i = encodeVarintApi(dAtA, i, uint64(len(m.Passwd)))
+		i = encodeVarintApi2(dAtA, i, uint64(len(m.Passwd)))
 		i--
 		dAtA[i] = 0x12
 	}
 	if len(m.Username) > 0 {
 		i -= len(m.Username)
 		copy(dAtA[i:], m.Username)
-		i = encodeVarintApi(dAtA, i, uint64(len(m.Username)))
+		i = encodeVarintApi2(dAtA, i, uint64(len(m.Username)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -291,15 +292,15 @@ func (m *LoginResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if len(m.Content) > 0 {
 		i -= len(m.Content)
 		copy(dAtA[i:], m.Content)
-		i = encodeVarintApi(dAtA, i, uint64(len(m.Content)))
+		i = encodeVarintApi2(dAtA, i, uint64(len(m.Content)))
 		i--
 		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
 
-func encodeVarintApi(dAtA []byte, offset int, v uint64) int {
-	offset -= sovApi(v)
+func encodeVarintApi2(dAtA []byte, offset int, v uint64) int {
+	offset -= sovApi2(v)
 	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
@@ -317,11 +318,11 @@ func (m *LoginReq) Size() (n int) {
 	_ = l
 	l = len(m.Username)
 	if l > 0 {
-		n += 1 + l + sovApi(uint64(l))
+		n += 1 + l + sovApi2(uint64(l))
 	}
 	l = len(m.Passwd)
 	if l > 0 {
-		n += 1 + l + sovApi(uint64(l))
+		n += 1 + l + sovApi2(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -337,7 +338,7 @@ func (m *LoginResp) Size() (n int) {
 	_ = l
 	l = len(m.Content)
 	if l > 0 {
-		n += 1 + l + sovApi(uint64(l))
+		n += 1 + l + sovApi2(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -345,11 +346,11 @@ func (m *LoginResp) Size() (n int) {
 	return n
 }
 
-func sovApi(x uint64) (n int) {
+func sovApi2(x uint64) (n int) {
 	return (math_bits.Len64(x|1) + 6) / 7
 }
-func sozApi(x uint64) (n int) {
-	return sovApi(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+func sozApi2(x uint64) (n int) {
+	return sovApi2(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
 func (m *LoginReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -359,7 +360,7 @@ func (m *LoginReq) Unmarshal(dAtA []byte) error {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
 			if shift >= 64 {
-				return ErrIntOverflowApi
+				return ErrIntOverflowApi2
 			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
@@ -387,7 +388,7 @@ func (m *LoginReq) Unmarshal(dAtA []byte) error {
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return ErrIntOverflowApi
+					return ErrIntOverflowApi2
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -401,11 +402,11 @@ func (m *LoginReq) Unmarshal(dAtA []byte) error {
 			}
 			intStringLen := int(stringLen)
 			if intStringLen < 0 {
-				return ErrInvalidLengthApi
+				return ErrInvalidLengthApi2
 			}
 			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
-				return ErrInvalidLengthApi
+				return ErrInvalidLengthApi2
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
@@ -419,7 +420,7 @@ func (m *LoginReq) Unmarshal(dAtA []byte) error {
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return ErrIntOverflowApi
+					return ErrIntOverflowApi2
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -433,11 +434,11 @@ func (m *LoginReq) Unmarshal(dAtA []byte) error {
 			}
 			intStringLen := int(stringLen)
 			if intStringLen < 0 {
-				return ErrInvalidLengthApi
+				return ErrInvalidLengthApi2
 			}
 			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
-				return ErrInvalidLengthApi
+				return ErrInvalidLengthApi2
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
@@ -446,15 +447,15 @@ func (m *LoginReq) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
-			skippy, err := skipApi(dAtA[iNdEx:])
+			skippy, err := skipApi2(dAtA[iNdEx:])
 			if err != nil {
 				return err
 			}
 			if skippy < 0 {
-				return ErrInvalidLengthApi
+				return ErrInvalidLengthApi2
 			}
 			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthApi
+				return ErrInvalidLengthApi2
 			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
@@ -477,7 +478,7 @@ func (m *LoginResp) Unmarshal(dAtA []byte) error {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
 			if shift >= 64 {
-				return ErrIntOverflowApi
+				return ErrIntOverflowApi2
 			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
@@ -505,7 +506,7 @@ func (m *LoginResp) Unmarshal(dAtA []byte) error {
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return ErrIntOverflowApi
+					return ErrIntOverflowApi2
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -519,11 +520,11 @@ func (m *LoginResp) Unmarshal(dAtA []byte) error {
 			}
 			intStringLen := int(stringLen)
 			if intStringLen < 0 {
-				return ErrInvalidLengthApi
+				return ErrInvalidLengthApi2
 			}
 			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
-				return ErrInvalidLengthApi
+				return ErrInvalidLengthApi2
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
@@ -532,15 +533,15 @@ func (m *LoginResp) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
-			skippy, err := skipApi(dAtA[iNdEx:])
+			skippy, err := skipApi2(dAtA[iNdEx:])
 			if err != nil {
 				return err
 			}
 			if skippy < 0 {
-				return ErrInvalidLengthApi
+				return ErrInvalidLengthApi2
 			}
 			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthApi
+				return ErrInvalidLengthApi2
 			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
@@ -555,7 +556,7 @@ func (m *LoginResp) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func skipApi(dAtA []byte) (n int, err error) {
+func skipApi2(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
 	depth := 0
@@ -563,7 +564,7 @@ func skipApi(dAtA []byte) (n int, err error) {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
 			if shift >= 64 {
-				return 0, ErrIntOverflowApi
+				return 0, ErrIntOverflowApi2
 			}
 			if iNdEx >= l {
 				return 0, io.ErrUnexpectedEOF
@@ -580,7 +581,7 @@ func skipApi(dAtA []byte) (n int, err error) {
 		case 0:
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return 0, ErrIntOverflowApi
+					return 0, ErrIntOverflowApi2
 				}
 				if iNdEx >= l {
 					return 0, io.ErrUnexpectedEOF
@@ -596,7 +597,7 @@ func skipApi(dAtA []byte) (n int, err error) {
 			var length int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return 0, ErrIntOverflowApi
+					return 0, ErrIntOverflowApi2
 				}
 				if iNdEx >= l {
 					return 0, io.ErrUnexpectedEOF
@@ -609,14 +610,14 @@ func skipApi(dAtA []byte) (n int, err error) {
 				}
 			}
 			if length < 0 {
-				return 0, ErrInvalidLengthApi
+				return 0, ErrInvalidLengthApi2
 			}
 			iNdEx += length
 		case 3:
 			depth++
 		case 4:
 			if depth == 0 {
-				return 0, ErrUnexpectedEndOfGroupApi
+				return 0, ErrUnexpectedEndOfGroupApi2
 			}
 			depth--
 		case 5:
@@ -625,7 +626,7 @@ func skipApi(dAtA []byte) (n int, err error) {
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
 		if iNdEx < 0 {
-			return 0, ErrInvalidLengthApi
+			return 0, ErrInvalidLengthApi2
 		}
 		if depth == 0 {
 			return iNdEx, nil
@@ -635,7 +636,7 @@ func skipApi(dAtA []byte) (n int, err error) {
 }
 
 var (
-	ErrInvalidLengthApi        = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowApi          = fmt.Errorf("proto: integer overflow")
-	ErrUnexpectedEndOfGroupApi = fmt.Errorf("proto: unexpected end of group")
+	ErrInvalidLengthApi2        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowApi2          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupApi2 = fmt.Errorf("proto: unexpected end of group")
 )

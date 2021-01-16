@@ -32,9 +32,30 @@ var (
 		PrimaryKey:  []*schema.Column{JobsColumns[0]},
 		ForeignKeys: []*schema.ForeignKey{},
 	}
+	// MachinesColumns holds the columns for the "machines" table.
+	MachinesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "host", Type: field.TypeString, Default: ""},
+		{Name: "port", Type: field.TypeInt},
+		{Name: "username", Type: field.TypeString, Default: ""},
+		{Name: "password", Type: field.TypeString, Default: ""},
+		{Name: "comment", Type: field.TypeString, Default: ""},
+		{Name: "command", Type: field.TypeString, Default: ""},
+		{Name: "status", Type: field.TypeInt},
+		{Name: "ctime", Type: field.TypeTime, Nullable: true},
+		{Name: "mtime", Type: field.TypeTime, Nullable: true},
+	}
+	// MachinesTable holds the schema information for the "machines" table.
+	MachinesTable = &schema.Table{
+		Name:        "machines",
+		Columns:     MachinesColumns,
+		PrimaryKey:  []*schema.Column{MachinesColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{},
+	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		JobsTable,
+		MachinesTable,
 	}
 )
 

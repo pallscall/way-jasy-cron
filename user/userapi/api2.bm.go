@@ -2,7 +2,7 @@
 // source: api2.proto
 
 /*
-Package api is a generated blademaster stub package.
+Package userapi is a generated blademaster stub package.
 This code was generated with kratos/tool/protobuf/protoc-gen-bm v0.1.
 
 package 命名使用 {appid}.{version} 的方式, version 形如 v1, v2 ..
@@ -10,7 +10,7 @@ package 命名使用 {appid}.{version} 的方式, version 形如 v1, v2 ..
 It is generated from these files:
 	api2.proto
 */
-package api
+package userapi
 
 import (
 	"context"
@@ -24,26 +24,26 @@ var _ *bm.Context
 var _ context.Context
 var _ binding.StructValidator
 
-var PathJobLogin = "/demo.service.v1.Job/Login"
+var PathUserLoginUrl = "/user/login"
 
-// JobBMServer is the server API for Job service.
-type JobBMServer interface {
-	Login(ctx context.Context, req *LoginReq) (resp *LoginResp, err error)
+// UserBMServer is the server API for User service.
+type UserBMServer interface {
+	LoginUrl(ctx context.Context, req *LoginReq) (resp *LoginResp, err error)
 }
 
-var JobSvc JobBMServer
+var UserSvc UserBMServer
 
-func jobLogin(c *bm.Context) {
+func userLoginUrl(c *bm.Context) {
 	p := new(LoginReq)
 	if err := c.BindWith(p, binding.Default(c.Request.Method, c.Request.Header.Get("Content-Type"))); err != nil {
 		return
 	}
-	resp, err := JobSvc.Login(c, p)
+	resp, err := UserSvc.LoginUrl(c, p)
 	c.JSON(resp, err)
 }
 
-// RegisterJobBMServer Register the blademaster route
-func RegisterJobBMServer(e *bm.Engine, server JobBMServer) {
-	JobSvc = server
-	e.GET("/demo.service.v1.Job/Login", jobLogin)
+// RegisterUserBMServer Register the blademaster route
+func RegisterUserBMServer(e *bm.Engine, server UserBMServer) {
+	UserSvc = server
+	e.GET("/user/login", userLoginUrl)
 }

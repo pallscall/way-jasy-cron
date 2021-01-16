@@ -7,6 +7,7 @@ import (
 	"way-jasy-cron/user/internal/service"
 	"net/http"
 	"sync"
+	pb "way-jasy-cron/user/userapi"
 
 	"github.com/go-kratos/kratos/pkg/log"
 	bm "github.com/go-kratos/kratos/pkg/net/http/blademaster"
@@ -78,6 +79,7 @@ func MustStart() {
 		initRouter(e)
 		utilerr.Check(e.Start())
 		svc = service.New()
+		pb.RegisterUserBMServer(e, svc)
 	}()
 	wg.Wait()
 }

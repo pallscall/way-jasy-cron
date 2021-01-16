@@ -10,6 +10,7 @@ import (
 	"way-jasy-cron/cron/internal/model/ent/migrate"
 
 	"way-jasy-cron/cron/internal/model/ent/job"
+	"way-jasy-cron/cron/internal/model/ent/machine"
 
 	"github.com/facebook/ent/dialect"
 	"github.com/facebook/ent/dialect/sql"
@@ -22,6 +23,8 @@ type Client struct {
 	Schema *migrate.Schema
 	// Job is the client for interacting with the Job builders.
 	Job *JobClient
+	// Machine is the client for interacting with the Machine builders.
+	Machine *MachineClient
 }
 
 // NewClient creates a new client configured with the given options.
@@ -36,6 +39,7 @@ func NewClient(opts ...Option) *Client {
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
 	c.Job = NewJobClient(c.config)
+	c.Machine = NewMachineClient(c.config)
 }
 
 // Open opens a database/sql.DB specified by the driver name and
@@ -66,9 +70,10 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	}
 	cfg := config{driver: tx, log: c.log, debug: c.debug, hooks: c.hooks}
 	return &Tx{
-		ctx:    ctx,
-		config: cfg,
-		Job:    NewJobClient(cfg),
+		ctx:     ctx,
+		config:  cfg,
+		Job:     NewJobClient(cfg),
+		Machine: NewMachineClient(cfg),
 	}, nil
 }
 
@@ -83,8 +88,9 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	}
 	cfg := config{driver: &txDriver{tx: tx, drv: c.driver}, log: c.log, debug: c.debug, hooks: c.hooks}
 	return &Tx{
-		config: cfg,
-		Job:    NewJobClient(cfg),
+		config:  cfg,
+		Job:     NewJobClient(cfg),
+		Machine: NewMachineClient(cfg),
 	}, nil
 }
 
@@ -114,6 +120,7 @@ func (c *Client) Close() error {
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
 	c.Job.Use(hooks...)
+	c.Machine.Use(hooks...)
 }
 
 // JobClient is a client for the Job schema.
@@ -202,4 +209,92 @@ func (c *JobClient) GetX(ctx context.Context, id int) *Job {
 // Hooks returns the client hooks.
 func (c *JobClient) Hooks() []Hook {
 	return c.hooks.Job
+}
+
+// MachineClient is a client for the Machine schema.
+type MachineClient struct {
+	config
+}
+
+// NewMachineClient returns a client for the Machine from the given config.
+func NewMachineClient(c config) *MachineClient {
+	return &MachineClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `machine.Hooks(f(g(h())))`.
+func (c *MachineClient) Use(hooks ...Hook) {
+	c.hooks.Machine = append(c.hooks.Machine, hooks...)
+}
+
+// Create returns a create builder for Machine.
+func (c *MachineClient) Create() *MachineCreate {
+	mutation := newMachineMutation(c.config, OpCreate)
+	return &MachineCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of Machine entities.
+func (c *MachineClient) CreateBulk(builders ...*MachineCreate) *MachineCreateBulk {
+	return &MachineCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for Machine.
+func (c *MachineClient) Update() *MachineUpdate {
+	mutation := newMachineMutation(c.config, OpUpdate)
+	return &MachineUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *MachineClient) UpdateOne(m *Machine) *MachineUpdateOne {
+	mutation := newMachineMutation(c.config, OpUpdateOne, withMachine(m))
+	return &MachineUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *MachineClient) UpdateOneID(id int) *MachineUpdateOne {
+	mutation := newMachineMutation(c.config, OpUpdateOne, withMachineID(id))
+	return &MachineUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Machine.
+func (c *MachineClient) Delete() *MachineDelete {
+	mutation := newMachineMutation(c.config, OpDelete)
+	return &MachineDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *MachineClient) DeleteOne(m *Machine) *MachineDeleteOne {
+	return c.DeleteOneID(m.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *MachineClient) DeleteOneID(id int) *MachineDeleteOne {
+	builder := c.Delete().Where(machine.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &MachineDeleteOne{builder}
+}
+
+// Query returns a query builder for Machine.
+func (c *MachineClient) Query() *MachineQuery {
+	return &MachineQuery{config: c.config}
+}
+
+// Get returns a Machine entity by its id.
+func (c *MachineClient) Get(ctx context.Context, id int) (*Machine, error) {
+	return c.Query().Where(machine.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *MachineClient) GetX(ctx context.Context, id int) *Machine {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *MachineClient) Hooks() []Hook {
+	return c.hooks.Machine
 }

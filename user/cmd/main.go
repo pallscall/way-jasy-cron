@@ -2,11 +2,13 @@ package main
 
 import (
 	"flag"
+	"way-jasy-cron/user/internal/server/grpc"
 	"way-jasy-cron/user/internal/server/http"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+	"way-jasy-cron/user/internal/service"
 
 	"github.com/go-kratos/kratos/pkg/conf/paladin"
 	"github.com/go-kratos/kratos/pkg/log"
@@ -23,8 +25,9 @@ func main() {
 	//if err != nil {
 	//	panic(err)
 	//}
+	svc := service.New()
 	http.MustStart()
-
+	grpc.MustStart(svc)
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT)
 	for {

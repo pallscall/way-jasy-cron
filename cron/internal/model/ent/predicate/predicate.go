@@ -8,3 +8,6 @@ import (
 
 // Job is the predicate function for job builders.
 type Job func(*sql.Selector)
+
+// Machine is the predicate function for machine builders.
+type Machine func(*sql.Selector)

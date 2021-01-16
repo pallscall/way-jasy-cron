@@ -1,8 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "api.proto",
-        "version": "1"
+        "title": "api2.proto",
+        "version": "2"
     },
     "schemes": [
         "http",
@@ -16,9 +16,9 @@
         "application/json"
     ],
     "paths": {
-        "/demo.service.v1.Job/Login": {
+        "/user/login": {
             "get": {
-                "summary": "/demo.service.v1.Job/Login",
+                "summary": "/user/login",
                 "responses": {
                     "200": {
                         "description": "A successful response.",
@@ -32,7 +32,7 @@
                                     "type": "string"
                                 },
                                 "data": {
-                                    "$ref": "#/definitions/.demo.service.v1.LoginResp"
+                                    "$ref": "#/definitions/.demo.service.v2.LoginResp"
                                 }
                             }
                         }
@@ -53,13 +53,13 @@
                     }
                 ],
                 "tags": [
-                    "demo.service.v1.Job"
+                    "demo.service.v2.User"
                 ]
             }
         }
     },
     "definitions": {
-        ".demo.service.v1.LoginReq": {
+        ".demo.service.v2.LoginReq": {
             "type": "object",
             "properties": {
                 "username": {
@@ -74,7 +74,7 @@
                 "passwd"
             ]
         },
-        ".demo.service.v1.LoginResp": {
+        ".demo.service.v2.LoginResp": {
             "type": "object",
             "properties": {
                 "content": {

@@ -45,11 +45,23 @@ func initRouter(e *bm.Engine) {
 	e.Ping(ping)
 	g := e.Group("/cron",middleware.Verify)
 	{
-		g.GET("", listJob)
-		g.GET("/query", queryJob)
-		g.POST("/create", createJob)
-		g.POST("/update", updateJob)
-		g.POST("/switch", switchJobStatus)
+		h := g.Group("/http")
+		{
+			h.GET("", listJob)
+			h.GET("/query", queryJob)
+			h.POST("/create", createJob)
+			h.POST("/update", updateJob)
+			h.POST("/switch", switchJobStatus)
+		}
+
+		s := g.Group("/shell")
+		{
+			s.GET("", listShellJob)
+			s.GET("/query", queryShellJob)
+			s.POST("/create", createShellJob)
+			s.POST("/update", updateShellJob)
+			s.POST("/switch", switchShellJobStatus)
+		}
 	}
 }
 
@@ -60,7 +72,8 @@ func ping(ctx *bm.Context) {
 	}
 }
 
-func MustStart() {
+func MustStart(s *service.Service) {
+	svc = s
 	var c struct {
 		Server *bm.ServerConfig
 		Auth   *warden.ClientConfig
@@ -77,7 +90,6 @@ func MustStart() {
 		defer wg.Done()
 		initRouter(e)
 		utilerr.Check(e.Start())
-		svc = service.New()
 		utilerr.Check(svc.InitJob())
 	}()
 	wg.Wait()

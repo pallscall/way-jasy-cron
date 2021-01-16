@@ -8,6 +8,7 @@ import (
 	"sync"
 	"time"
 	"way-jasy-cron/cron/internal/model/ent/job"
+	"way-jasy-cron/cron/internal/model/ent/machine"
 	"way-jasy-cron/cron/internal/model/ent/predicate"
 
 	"github.com/facebook/ent"
@@ -22,7 +23,8 @@ const (
 	OpUpdateOne = ent.OpUpdateOne
 
 	// Node types.
-	TypeJob = "Job"
+	TypeJob     = "Job"
+	TypeMachine = "Machine"
 )
 
 // JobMutation represents an operation that mutates the Job nodes in the graph.
@@ -1074,4 +1076,839 @@ func (m *JobMutation) ClearEdge(name string) error {
 // It returns an error if the edge is not defined in the schema.
 func (m *JobMutation) ResetEdge(name string) error {
 	return fmt.Errorf("unknown Job edge %s", name)
+}
+
+// MachineMutation represents an operation that mutates the Machine nodes in the graph.
+type MachineMutation struct {
+	config
+	op            Op
+	typ           string
+	id            *int
+	host          *string
+	port          *int
+	addport       *int
+	username      *string
+	password      *string
+	comment       *string
+	command       *string
+	status        *int
+	addstatus     *int
+	ctime         *time.Time
+	mtime         *time.Time
+	clearedFields map[string]struct{}
+	done          bool
+	oldValue      func(context.Context) (*Machine, error)
+	predicates    []predicate.Machine
+}
+
+var _ ent.Mutation = (*MachineMutation)(nil)
+
+// machineOption allows management of the mutation configuration using functional options.
+type machineOption func(*MachineMutation)
+
+// newMachineMutation creates new mutation for the Machine entity.
+func newMachineMutation(c config, op Op, opts ...machineOption) *MachineMutation {
+	m := &MachineMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeMachine,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withMachineID sets the ID field of the mutation.
+func withMachineID(id int) machineOption {
+	return func(m *MachineMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *Machine
+		)
+		m.oldValue = func(ctx context.Context) (*Machine, error) {
+			once.Do(func() {
+				if m.done {
+					err = fmt.Errorf("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().Machine.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withMachine sets the old Machine of the mutation.
+func withMachine(node *Machine) machineOption {
+	return func(m *MachineMutation) {
+		m.oldValue = func(context.Context) (*Machine, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m MachineMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m MachineMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, fmt.Errorf("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of Machine entities.
+func (m *MachineMutation) SetID(id int) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID
+// is only available if it was provided to the builder.
+func (m *MachineMutation) ID() (id int, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// SetHost sets the "host" field.
+func (m *MachineMutation) SetHost(s string) {
+	m.host = &s
+}
+
+// Host returns the value of the "host" field in the mutation.
+func (m *MachineMutation) Host() (r string, exists bool) {
+	v := m.host
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldHost returns the old "host" field's value of the Machine entity.
+// If the Machine object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MachineMutation) OldHost(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldHost is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldHost requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldHost: %w", err)
+	}
+	return oldValue.Host, nil
+}
+
+// ResetHost resets all changes to the "host" field.
+func (m *MachineMutation) ResetHost() {
+	m.host = nil
+}
+
+// SetPort sets the "port" field.
+func (m *MachineMutation) SetPort(i int) {
+	m.port = &i
+	m.addport = nil
+}
+
+// Port returns the value of the "port" field in the mutation.
+func (m *MachineMutation) Port() (r int, exists bool) {
+	v := m.port
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldPort returns the old "port" field's value of the Machine entity.
+// If the Machine object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MachineMutation) OldPort(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldPort is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldPort requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldPort: %w", err)
+	}
+	return oldValue.Port, nil
+}
+
+// AddPort adds i to the "port" field.
+func (m *MachineMutation) AddPort(i int) {
+	if m.addport != nil {
+		*m.addport += i
+	} else {
+		m.addport = &i
+	}
+}
+
+// AddedPort returns the value that was added to the "port" field in this mutation.
+func (m *MachineMutation) AddedPort() (r int, exists bool) {
+	v := m.addport
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetPort resets all changes to the "port" field.
+func (m *MachineMutation) ResetPort() {
+	m.port = nil
+	m.addport = nil
+}
+
+// SetUsername sets the "username" field.
+func (m *MachineMutation) SetUsername(s string) {
+	m.username = &s
+}
+
+// Username returns the value of the "username" field in the mutation.
+func (m *MachineMutation) Username() (r string, exists bool) {
+	v := m.username
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUsername returns the old "username" field's value of the Machine entity.
+// If the Machine object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MachineMutation) OldUsername(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldUsername is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldUsername requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUsername: %w", err)
+	}
+	return oldValue.Username, nil
+}
+
+// ResetUsername resets all changes to the "username" field.
+func (m *MachineMutation) ResetUsername() {
+	m.username = nil
+}
+
+// SetPassword sets the "password" field.
+func (m *MachineMutation) SetPassword(s string) {
+	m.password = &s
+}
+
+// Password returns the value of the "password" field in the mutation.
+func (m *MachineMutation) Password() (r string, exists bool) {
+	v := m.password
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldPassword returns the old "password" field's value of the Machine entity.
+// If the Machine object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MachineMutation) OldPassword(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldPassword is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldPassword requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldPassword: %w", err)
+	}
+	return oldValue.Password, nil
+}
+
+// ResetPassword resets all changes to the "password" field.
+func (m *MachineMutation) ResetPassword() {
+	m.password = nil
+}
+
+// SetComment sets the "comment" field.
+func (m *MachineMutation) SetComment(s string) {
+	m.comment = &s
+}
+
+// Comment returns the value of the "comment" field in the mutation.
+func (m *MachineMutation) Comment() (r string, exists bool) {
+	v := m.comment
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldComment returns the old "comment" field's value of the Machine entity.
+// If the Machine object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MachineMutation) OldComment(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldComment is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldComment requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldComment: %w", err)
+	}
+	return oldValue.Comment, nil
+}
+
+// ResetComment resets all changes to the "comment" field.
+func (m *MachineMutation) ResetComment() {
+	m.comment = nil
+}
+
+// SetCommand sets the "command" field.
+func (m *MachineMutation) SetCommand(s string) {
+	m.command = &s
+}
+
+// Command returns the value of the "command" field in the mutation.
+func (m *MachineMutation) Command() (r string, exists bool) {
+	v := m.command
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCommand returns the old "command" field's value of the Machine entity.
+// If the Machine object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MachineMutation) OldCommand(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldCommand is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldCommand requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCommand: %w", err)
+	}
+	return oldValue.Command, nil
+}
+
+// ResetCommand resets all changes to the "command" field.
+func (m *MachineMutation) ResetCommand() {
+	m.command = nil
+}
+
+// SetStatus sets the "status" field.
+func (m *MachineMutation) SetStatus(i int) {
+	m.status = &i
+	m.addstatus = nil
+}
+
+// Status returns the value of the "status" field in the mutation.
+func (m *MachineMutation) Status() (r int, exists bool) {
+	v := m.status
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldStatus returns the old "status" field's value of the Machine entity.
+// If the Machine object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MachineMutation) OldStatus(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldStatus is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldStatus requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldStatus: %w", err)
+	}
+	return oldValue.Status, nil
+}
+
+// AddStatus adds i to the "status" field.
+func (m *MachineMutation) AddStatus(i int) {
+	if m.addstatus != nil {
+		*m.addstatus += i
+	} else {
+		m.addstatus = &i
+	}
+}
+
+// AddedStatus returns the value that was added to the "status" field in this mutation.
+func (m *MachineMutation) AddedStatus() (r int, exists bool) {
+	v := m.addstatus
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetStatus resets all changes to the "status" field.
+func (m *MachineMutation) ResetStatus() {
+	m.status = nil
+	m.addstatus = nil
+}
+
+// SetCtime sets the "ctime" field.
+func (m *MachineMutation) SetCtime(t time.Time) {
+	m.ctime = &t
+}
+
+// Ctime returns the value of the "ctime" field in the mutation.
+func (m *MachineMutation) Ctime() (r time.Time, exists bool) {
+	v := m.ctime
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCtime returns the old "ctime" field's value of the Machine entity.
+// If the Machine object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MachineMutation) OldCtime(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldCtime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldCtime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCtime: %w", err)
+	}
+	return oldValue.Ctime, nil
+}
+
+// ClearCtime clears the value of the "ctime" field.
+func (m *MachineMutation) ClearCtime() {
+	m.ctime = nil
+	m.clearedFields[machine.FieldCtime] = struct{}{}
+}
+
+// CtimeCleared returns if the "ctime" field was cleared in this mutation.
+func (m *MachineMutation) CtimeCleared() bool {
+	_, ok := m.clearedFields[machine.FieldCtime]
+	return ok
+}
+
+// ResetCtime resets all changes to the "ctime" field.
+func (m *MachineMutation) ResetCtime() {
+	m.ctime = nil
+	delete(m.clearedFields, machine.FieldCtime)
+}
+
+// SetMtime sets the "mtime" field.
+func (m *MachineMutation) SetMtime(t time.Time) {
+	m.mtime = &t
+}
+
+// Mtime returns the value of the "mtime" field in the mutation.
+func (m *MachineMutation) Mtime() (r time.Time, exists bool) {
+	v := m.mtime
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMtime returns the old "mtime" field's value of the Machine entity.
+// If the Machine object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MachineMutation) OldMtime(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldMtime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldMtime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMtime: %w", err)
+	}
+	return oldValue.Mtime, nil
+}
+
+// ClearMtime clears the value of the "mtime" field.
+func (m *MachineMutation) ClearMtime() {
+	m.mtime = nil
+	m.clearedFields[machine.FieldMtime] = struct{}{}
+}
+
+// MtimeCleared returns if the "mtime" field was cleared in this mutation.
+func (m *MachineMutation) MtimeCleared() bool {
+	_, ok := m.clearedFields[machine.FieldMtime]
+	return ok
+}
+
+// ResetMtime resets all changes to the "mtime" field.
+func (m *MachineMutation) ResetMtime() {
+	m.mtime = nil
+	delete(m.clearedFields, machine.FieldMtime)
+}
+
+// Op returns the operation name.
+func (m *MachineMutation) Op() Op {
+	return m.op
+}
+
+// Type returns the node type of this mutation (Machine).
+func (m *MachineMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *MachineMutation) Fields() []string {
+	fields := make([]string, 0, 9)
+	if m.host != nil {
+		fields = append(fields, machine.FieldHost)
+	}
+	if m.port != nil {
+		fields = append(fields, machine.FieldPort)
+	}
+	if m.username != nil {
+		fields = append(fields, machine.FieldUsername)
+	}
+	if m.password != nil {
+		fields = append(fields, machine.FieldPassword)
+	}
+	if m.comment != nil {
+		fields = append(fields, machine.FieldComment)
+	}
+	if m.command != nil {
+		fields = append(fields, machine.FieldCommand)
+	}
+	if m.status != nil {
+		fields = append(fields, machine.FieldStatus)
+	}
+	if m.ctime != nil {
+		fields = append(fields, machine.FieldCtime)
+	}
+	if m.mtime != nil {
+		fields = append(fields, machine.FieldMtime)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *MachineMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case machine.FieldHost:
+		return m.Host()
+	case machine.FieldPort:
+		return m.Port()
+	case machine.FieldUsername:
+		return m.Username()
+	case machine.FieldPassword:
+		return m.Password()
+	case machine.FieldComment:
+		return m.Comment()
+	case machine.FieldCommand:
+		return m.Command()
+	case machine.FieldStatus:
+		return m.Status()
+	case machine.FieldCtime:
+		return m.Ctime()
+	case machine.FieldMtime:
+		return m.Mtime()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *MachineMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case machine.FieldHost:
+		return m.OldHost(ctx)
+	case machine.FieldPort:
+		return m.OldPort(ctx)
+	case machine.FieldUsername:
+		return m.OldUsername(ctx)
+	case machine.FieldPassword:
+		return m.OldPassword(ctx)
+	case machine.FieldComment:
+		return m.OldComment(ctx)
+	case machine.FieldCommand:
+		return m.OldCommand(ctx)
+	case machine.FieldStatus:
+		return m.OldStatus(ctx)
+	case machine.FieldCtime:
+		return m.OldCtime(ctx)
+	case machine.FieldMtime:
+		return m.OldMtime(ctx)
+	}
+	return nil, fmt.Errorf("unknown Machine field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *MachineMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case machine.FieldHost:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetHost(v)
+		return nil
+	case machine.FieldPort:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetPort(v)
+		return nil
+	case machine.FieldUsername:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUsername(v)
+		return nil
+	case machine.FieldPassword:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetPassword(v)
+		return nil
+	case machine.FieldComment:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetComment(v)
+		return nil
+	case machine.FieldCommand:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCommand(v)
+		return nil
+	case machine.FieldStatus:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetStatus(v)
+		return nil
+	case machine.FieldCtime:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCtime(v)
+		return nil
+	case machine.FieldMtime:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMtime(v)
+		return nil
+	}
+	return fmt.Errorf("unknown Machine field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *MachineMutation) AddedFields() []string {
+	var fields []string
+	if m.addport != nil {
+		fields = append(fields, machine.FieldPort)
+	}
+	if m.addstatus != nil {
+		fields = append(fields, machine.FieldStatus)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *MachineMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case machine.FieldPort:
+		return m.AddedPort()
+	case machine.FieldStatus:
+		return m.AddedStatus()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *MachineMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case machine.FieldPort:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddPort(v)
+		return nil
+	case machine.FieldStatus:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddStatus(v)
+		return nil
+	}
+	return fmt.Errorf("unknown Machine numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *MachineMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(machine.FieldCtime) {
+		fields = append(fields, machine.FieldCtime)
+	}
+	if m.FieldCleared(machine.FieldMtime) {
+		fields = append(fields, machine.FieldMtime)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *MachineMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *MachineMutation) ClearField(name string) error {
+	switch name {
+	case machine.FieldCtime:
+		m.ClearCtime()
+		return nil
+	case machine.FieldMtime:
+		m.ClearMtime()
+		return nil
+	}
+	return fmt.Errorf("unknown Machine nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *MachineMutation) ResetField(name string) error {
+	switch name {
+	case machine.FieldHost:
+		m.ResetHost()
+		return nil
+	case machine.FieldPort:
+		m.ResetPort()
+		return nil
+	case machine.FieldUsername:
+		m.ResetUsername()
+		return nil
+	case machine.FieldPassword:
+		m.ResetPassword()
+		return nil
+	case machine.FieldComment:
+		m.ResetComment()
+		return nil
+	case machine.FieldCommand:
+		m.ResetCommand()
+		return nil
+	case machine.FieldStatus:
+		m.ResetStatus()
+		return nil
+	case machine.FieldCtime:
+		m.ResetCtime()
+		return nil
+	case machine.FieldMtime:
+		m.ResetMtime()
+		return nil
+	}
+	return fmt.Errorf("unknown Machine field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *MachineMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *MachineMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *MachineMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *MachineMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *MachineMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *MachineMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *MachineMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown Machine unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *MachineMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown Machine edge %s", name)
 }

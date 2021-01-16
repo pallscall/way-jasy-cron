@@ -14,6 +14,8 @@ type Tx struct {
 	config
 	// Job is the client for interacting with the Job builders.
 	Job *JobClient
+	// Machine is the client for interacting with the Machine builders.
+	Machine *MachineClient
 
 	// lazily loaded.
 	client     *Client
@@ -150,6 +152,7 @@ func (tx *Tx) Client() *Client {
 
 func (tx *Tx) init() {
 	tx.Job = NewJobClient(tx.config)
+	tx.Machine = NewMachineClient(tx.config)
 }
 
 // txDriver wraps the given dialect.Tx with a nop dialect.Driver implementation.

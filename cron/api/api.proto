@@ -15,20 +15,16 @@ package demo.service.v1;
 option go_package = "api";
 option (gogoproto.goproto_getters_all) = false;
 
-service Demo {
-  rpc Ping(.google.protobuf.Empty) returns (.google.protobuf.Empty);
-  rpc SayHello(HelloReq) returns (.google.protobuf.Empty);
-  rpc SayHelloURL(HelloReq) returns (HelloResp) {
-    option (google.api.http) = {
-      get: "/kratos-demo/say_hello"
-    };
-  };
+service Job {
+  rpc Login(LoginReq) returns (LoginResp);
 }
 
-message HelloReq {
-  string name = 1 [(gogoproto.moretags) = 'form:"name" validate:"required"'];
+message LoginReq {
+  string username = 1 [(gogoproto.moretags) = 'form:"username" validate:"required"'];
+  string passwd = 2 [(gogoproto.moretags) = 'form:"passwd" validate:"required"'];
 }
 
-message HelloResp {
+message LoginResp {
   string Content = 1 [(gogoproto.jsontag) = 'content'];
 }
+

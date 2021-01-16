@@ -4,11 +4,8 @@ package ent
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
 	"strings"
 	"time"
-	"way-jasy-cron/common/ecron"
-	"way-jasy-cron/cron/ecode"
 	"way-jasy-cron/cron/internal/model/ent/job"
 
 	"github.com/facebook/ent/dialect/sql"
@@ -222,12 +219,4 @@ func (j Jobs) config(cfg config) {
 	for _i := range j {
 		j[_i].config = cfg
 	}
-}
-
-func (j *Job) Validate() error {
-	spec := j.Spec
-	if _, err := ecron.ParseStandard(spec); err != nil {
-		return errors.Wrap(ecode.InvalidSpec, "job spec is incorrect！")
-	}
-	return nil
 }
