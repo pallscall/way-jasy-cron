@@ -61,6 +61,7 @@ func initRouter(e *bm.Engine) {
 			s.POST("/create", createShellJob)
 			s.POST("/update", updateShellJob)
 			s.POST("/switch", switchShellJobStatus)
+			s.POST("/ping", connHost)
 		}
 	}
 }

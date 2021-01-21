@@ -18,6 +18,8 @@ func (User) Fields() []ent.Field {
 		field.String("password").Default(""),
 		field.String("tel").Default(""),
 		field.String("email").Default(""),
+		field.String("public_key").Default(""),
+		field.String("private_key").Default(""),
 		field.Time("rtime").Optional().Comment("注册时间"),
 	}
 }

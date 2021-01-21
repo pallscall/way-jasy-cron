@@ -15,6 +15,8 @@ var (
 		{Name: "password", Type: field.TypeString, Default: ""},
 		{Name: "tel", Type: field.TypeString, Default: ""},
 		{Name: "email", Type: field.TypeString, Default: ""},
+		{Name: "public_key", Type: field.TypeString, Default: ""},
+		{Name: "private_key", Type: field.TypeString, Default: ""},
 		{Name: "rtime", Type: field.TypeTime, Nullable: true},
 	}
 	// UsersTable holds the schema information for the "users" table.

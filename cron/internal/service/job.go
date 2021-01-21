@@ -105,5 +105,5 @@ func (svc *Service) InitJob() error{
 }
 
 func (svc *Service) acquireJobExecutor(job *ent.Job) *ent_ex.JobExecutor{
-	return svc.jobex.Create(job, svc.SwitchJobStatus, svc.http)
+	return svc.jobex.Create(job, svc.SwitchJobStatus, svc.http, svc.mail)
 }

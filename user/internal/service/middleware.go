@@ -20,6 +20,10 @@ func (svc *Service) Verify(ctx *bm.Context, accessKey string) error{
 	if err = ctx.Bind(req); err != nil {
 		return err
 	}
+	if err := svc.DecodePwd(ctx, req); err != nil {
+		log.Error("method: Verify#middleware decode pwd err:", err)
+		return err
+	}
 	if req.Password != user.Password {
 		return ecode.InvalidPassword
 	}

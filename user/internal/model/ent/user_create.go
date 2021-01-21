@@ -76,6 +76,34 @@ func (uc *UserCreate) SetNillableEmail(s *string) *UserCreate {
 	return uc
 }
 
+// SetPublicKey sets the "public_key" field.
+func (uc *UserCreate) SetPublicKey(s string) *UserCreate {
+	uc.mutation.SetPublicKey(s)
+	return uc
+}
+
+// SetNillablePublicKey sets the "public_key" field if the given value is not nil.
+func (uc *UserCreate) SetNillablePublicKey(s *string) *UserCreate {
+	if s != nil {
+		uc.SetPublicKey(*s)
+	}
+	return uc
+}
+
+// SetPrivateKey sets the "private_key" field.
+func (uc *UserCreate) SetPrivateKey(s string) *UserCreate {
+	uc.mutation.SetPrivateKey(s)
+	return uc
+}
+
+// SetNillablePrivateKey sets the "private_key" field if the given value is not nil.
+func (uc *UserCreate) SetNillablePrivateKey(s *string) *UserCreate {
+	if s != nil {
+		uc.SetPrivateKey(*s)
+	}
+	return uc
+}
+
 // SetRtime sets the "rtime" field.
 func (uc *UserCreate) SetRtime(t time.Time) *UserCreate {
 	uc.mutation.SetRtime(t)
@@ -164,6 +192,14 @@ func (uc *UserCreate) defaults() {
 		v := user.DefaultEmail
 		uc.mutation.SetEmail(v)
 	}
+	if _, ok := uc.mutation.PublicKey(); !ok {
+		v := user.DefaultPublicKey
+		uc.mutation.SetPublicKey(v)
+	}
+	if _, ok := uc.mutation.PrivateKey(); !ok {
+		v := user.DefaultPrivateKey
+		uc.mutation.SetPrivateKey(v)
+	}
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -179,6 +215,12 @@ func (uc *UserCreate) check() error {
 	}
 	if _, ok := uc.mutation.Email(); !ok {
 		return &ValidationError{Name: "email", err: errors.New("ent: missing required field \"email\"")}
+	}
+	if _, ok := uc.mutation.PublicKey(); !ok {
+		return &ValidationError{Name: "public_key", err: errors.New("ent: missing required field \"public_key\"")}
+	}
+	if _, ok := uc.mutation.PrivateKey(); !ok {
+		return &ValidationError{Name: "private_key", err: errors.New("ent: missing required field \"private_key\"")}
 	}
 	if v, ok := uc.mutation.ID(); ok {
 		if err := user.IDValidator(v); err != nil {
@@ -249,6 +291,22 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 			Column: user.FieldEmail,
 		})
 		_node.Email = value
+	}
+	if value, ok := uc.mutation.PublicKey(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: user.FieldPublicKey,
+		})
+		_node.PublicKey = value
+	}
+	if value, ok := uc.mutation.PrivateKey(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: user.FieldPrivateKey,
+		})
+		_node.PrivateKey = value
 	}
 	if value, ok := uc.mutation.Rtime(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

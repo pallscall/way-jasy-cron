@@ -2,13 +2,17 @@ package ent_ex
 
 import (
 	"context"
+	"fmt"
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
+
 	"net/http"
 	"strings"
 	"way-jasy-cron/common/ecron"
+	"way-jasy-cron/common/email"
 	utilpaladin "way-jasy-cron/common/util/paladin"
 	"way-jasy-cron/cron/ecode"
+	"way-jasy-cron/cron/internal/dao/mail"
 	"way-jasy-cron/cron/internal/model/ent"
 )
 
@@ -66,6 +70,7 @@ type JobExecutor struct {
 	closer func(ctx context.Context, id, opt int) error
 	RetryCount     int
 	RetryTempCount int
+	email          *mail.Manager
 }
 
 type Manager struct {
@@ -92,6 +97,7 @@ func (m *Manager) Create(
 	job *ent.Job,
 	closer closer,
 	client *http.Client,
+	email *mail.Manager,
 ) *JobExecutor {
 	return &JobExecutor{
 		job: job,
@@ -99,6 +105,7 @@ func (m *Manager) Create(
 		httpClient: client,
 		RetryCount: m.RetryCount,
 		RetryTempCount: m.RetryCount,
+		email: email,
 	}
 }
 
@@ -109,6 +116,10 @@ func (j  *JobExecutor) Validate() error {
 	}
 	return nil
 }
+
+const errMsg = `定时任务出错通知
+	您创建的定时任务 (id: %d, name: %s) 执行出错!!!
+	您的任务已被禁用！请联系相关人员进行处理`
 
 func (j *JobExecutor) Run() {
 	var (
@@ -123,6 +134,11 @@ func (j *JobExecutor) Run() {
 				if err = j.closer(context.TODO(), j.job.ID, int(JobStopping)); err != nil {
 					log.Error("method: Run#ent_ex/job err:",err)
 				}
+			}
+			m := email.NewEmail(j.email.Host, j.email.Username, j.email.Password, j.email.Port)
+			m.WithInfo("定时任务失败报警",fmt.Sprintf(errMsg, j.job.ID, j.job.Name), []string{j.job.Creator})
+			if err := m.Send(); err != nil {
+				log.Error("send mail notice err:", err)
 			}
 			return
 		}

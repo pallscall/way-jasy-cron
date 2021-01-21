@@ -3,6 +3,9 @@ package service
 import (
 	"context"
 	log "github.com/sirupsen/logrus"
+	"golang.org/x/crypto/ssh"
+	"net"
+	"strconv"
 	"way-jasy-cron/cron/ecode"
 	"way-jasy-cron/cron/internal/model/ent"
 	"way-jasy-cron/cron/internal/model/ent_ex"
@@ -71,4 +74,24 @@ func (svc *Service) SwitchShellJobStatus(ctx context.Context, id, opt int) error
 		return ecode.InvalidOption
 	}
 	return nil
+}
+
+func (svc *Service) ConnHost(ctx context.Context, req *ent.Machine) (*ssh.Client, error) {
+	var (
+		client *ssh.Client
+		err error
+	)
+	addr := req.Host + ":" + strconv.Itoa(req.Port)
+	if client, err = ssh.Dial("tcp", addr, &ssh.ClientConfig{
+		User: req.Username,
+		Auth: []ssh.AuthMethod{ssh.Password(req.Password)},
+		HostKeyCallback: func(hostname string, remote net.Addr, key ssh.PublicKey) error {
+			return nil
+		},
+	}); err != nil {
+		log.Error("ConnHost err: ", err)
+		return nil, err
+	}
+	defer client.Close()
+	return client, nil
 }

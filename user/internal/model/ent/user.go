@@ -24,6 +24,10 @@ type User struct {
 	Tel string `json:"tel,omitempty"`
 	// Email holds the value of the "email" field.
 	Email string `json:"email,omitempty"`
+	// PublicKey holds the value of the "public_key" field.
+	PublicKey string `json:"public_key,omitempty"`
+	// PrivateKey holds the value of the "private_key" field.
+	PrivateKey string `json:"private_key,omitempty"`
 	// Rtime holds the value of the "rtime" field.
 	Rtime time.Time `json:"rtime,omitempty"`
 }
@@ -35,7 +39,7 @@ func (*User) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case user.FieldID:
 			values[i] = &sql.NullInt64{}
-		case user.FieldUsername, user.FieldPassword, user.FieldTel, user.FieldEmail:
+		case user.FieldUsername, user.FieldPassword, user.FieldTel, user.FieldEmail, user.FieldPublicKey, user.FieldPrivateKey:
 			values[i] = &sql.NullString{}
 		case user.FieldRtime:
 			values[i] = &sql.NullTime{}
@@ -84,6 +88,18 @@ func (u *User) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				u.Email = value.String
 			}
+		case user.FieldPublicKey:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field public_key", values[i])
+			} else if value.Valid {
+				u.PublicKey = value.String
+			}
+		case user.FieldPrivateKey:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field private_key", values[i])
+			} else if value.Valid {
+				u.PrivateKey = value.String
+			}
 		case user.FieldRtime:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field rtime", values[i])
@@ -126,6 +142,10 @@ func (u *User) String() string {
 	builder.WriteString(u.Tel)
 	builder.WriteString(", email=")
 	builder.WriteString(u.Email)
+	builder.WriteString(", public_key=")
+	builder.WriteString(u.PublicKey)
+	builder.WriteString(", private_key=")
+	builder.WriteString(u.PrivateKey)
 	builder.WriteString(", rtime=")
 	builder.WriteString(u.Rtime.Format(time.ANSIC))
 	builder.WriteByte(')')

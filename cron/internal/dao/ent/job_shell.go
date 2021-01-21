@@ -27,7 +27,7 @@ func (m *Manager) ListShellJob(ctx context.Context, req *ent_ex.ListShellJobOpti
 func (m *Manager) CreateShellJob(ctx context.Context, j *ent.Machine) error {
 	_, err := m.Client.Machine.Create().
 		SetHost(j.Host).SetUsername(j.Username).SetPassword(j.Password).SetComment(j.Comment).
-		SetCommand(j.Command).SetStatus(j.Status).
+		SetCommand(j.Command).SetStatus(j.Status).SetPort(j.Port).
 		Save(ctx)
 	return err
 }
@@ -35,7 +35,7 @@ func (m *Manager) CreateShellJob(ctx context.Context, j *ent.Machine) error {
 func (m *Manager) UpdateShellJob(ctx context.Context, j *ent.Machine) error {
 	_, err := m.Client.Machine.Update().
 		SetHost(j.Host).SetUsername(j.Username).SetPassword(j.Password).SetComment(j.Comment).
-		SetCommand(j.Command).SetStatus(j.Status).Save(ctx)
+		SetCommand(j.Command).SetStatus(j.Status).SetPort(j.Port).Save(ctx)
 	return err
 }
 

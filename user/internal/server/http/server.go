@@ -47,6 +47,9 @@ func initRouter(e *bm.Engine) {
 	{
 		g.POST("/login", verifyLogin)
 		g.POST("/register", register)
+
+		g.GET("/pubKey", getPublicKey)
+		g.POST("/crypt", generateRSA)
 	}
 	t := e.Group("/test")
 	{

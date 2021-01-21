@@ -1,0 +1,6 @@
+host = "smtp.qq.com"
+port = 465
+username = "3066989601@qq.com"
+password = "xslangjlcvmtbhji"
+to=["306698601@qq.com"]
+

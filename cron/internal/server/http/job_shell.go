@@ -52,3 +52,10 @@ func switchShellJobStatus(ctx *bm.Context) {
 	ctx.JSON(nil, svc.SwitchShellJobStatus(ctx, req.ID, req.Opt))
 }
 
+func connHost(ctx *bm.Context) {
+	req := &ent.Machine{}
+	if err := ctx.BindWith(req, binding.JSON); err != nil {
+		return
+	}
+	ctx.JSON(svc.ConnHost(ctx, req))
+}

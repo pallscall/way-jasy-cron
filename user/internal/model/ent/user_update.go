@@ -83,6 +83,34 @@ func (uu *UserUpdate) SetNillableEmail(s *string) *UserUpdate {
 	return uu
 }
 
+// SetPublicKey sets the "public_key" field.
+func (uu *UserUpdate) SetPublicKey(s string) *UserUpdate {
+	uu.mutation.SetPublicKey(s)
+	return uu
+}
+
+// SetNillablePublicKey sets the "public_key" field if the given value is not nil.
+func (uu *UserUpdate) SetNillablePublicKey(s *string) *UserUpdate {
+	if s != nil {
+		uu.SetPublicKey(*s)
+	}
+	return uu
+}
+
+// SetPrivateKey sets the "private_key" field.
+func (uu *UserUpdate) SetPrivateKey(s string) *UserUpdate {
+	uu.mutation.SetPrivateKey(s)
+	return uu
+}
+
+// SetNillablePrivateKey sets the "private_key" field if the given value is not nil.
+func (uu *UserUpdate) SetNillablePrivateKey(s *string) *UserUpdate {
+	if s != nil {
+		uu.SetPrivateKey(*s)
+	}
+	return uu
+}
+
 // SetRtime sets the "rtime" field.
 func (uu *UserUpdate) SetRtime(t time.Time) *UserUpdate {
 	uu.mutation.SetRtime(t)
@@ -205,6 +233,20 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: user.FieldEmail,
 		})
 	}
+	if value, ok := uu.mutation.PublicKey(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: user.FieldPublicKey,
+		})
+	}
+	if value, ok := uu.mutation.PrivateKey(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: user.FieldPrivateKey,
+		})
+	}
 	if value, ok := uu.mutation.Rtime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
@@ -288,6 +330,34 @@ func (uuo *UserUpdateOne) SetEmail(s string) *UserUpdateOne {
 func (uuo *UserUpdateOne) SetNillableEmail(s *string) *UserUpdateOne {
 	if s != nil {
 		uuo.SetEmail(*s)
+	}
+	return uuo
+}
+
+// SetPublicKey sets the "public_key" field.
+func (uuo *UserUpdateOne) SetPublicKey(s string) *UserUpdateOne {
+	uuo.mutation.SetPublicKey(s)
+	return uuo
+}
+
+// SetNillablePublicKey sets the "public_key" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillablePublicKey(s *string) *UserUpdateOne {
+	if s != nil {
+		uuo.SetPublicKey(*s)
+	}
+	return uuo
+}
+
+// SetPrivateKey sets the "private_key" field.
+func (uuo *UserUpdateOne) SetPrivateKey(s string) *UserUpdateOne {
+	uuo.mutation.SetPrivateKey(s)
+	return uuo
+}
+
+// SetNillablePrivateKey sets the "private_key" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillablePrivateKey(s *string) *UserUpdateOne {
+	if s != nil {
+		uuo.SetPrivateKey(*s)
 	}
 	return uuo
 }
@@ -410,6 +480,20 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 			Type:   field.TypeString,
 			Value:  value,
 			Column: user.FieldEmail,
+		})
+	}
+	if value, ok := uuo.mutation.PublicKey(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: user.FieldPublicKey,
+		})
+	}
+	if value, ok := uuo.mutation.PrivateKey(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: user.FieldPrivateKey,
 		})
 	}
 	if value, ok := uuo.mutation.Rtime(); ok {

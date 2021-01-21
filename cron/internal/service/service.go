@@ -6,6 +6,7 @@ import (
 	"sync"
 	"way-jasy-cron/common/ecron"
 	"way-jasy-cron/cron/internal/dao/ent"
+	"way-jasy-cron/cron/internal/dao/mail"
 	"way-jasy-cron/cron/internal/dao/mysql"
 	"way-jasy-cron/cron/internal/model/ent_ex"
 
@@ -18,6 +19,7 @@ import (
 type Service struct {
 	ent         *ent.Manager
 	mysql		*mysql.Manager
+	mail        *mail.Manager
 	cron        *ecron.Cron
 	http        *http.Client
 	jobex       *ent_ex.Manager
@@ -33,6 +35,7 @@ func New() *Service{
 		mysql:   mysql.New(),
 		jobex:   ent_ex.New(),
 		http:    http.DefaultClient,
+		mail:    mail.New(),
 		stop:    make(chan bool, 1),
 	}
 }

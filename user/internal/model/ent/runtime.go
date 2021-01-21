@@ -29,6 +29,14 @@ func init() {
 	userDescEmail := userFields[4].Descriptor()
 	// user.DefaultEmail holds the default value on creation for the email field.
 	user.DefaultEmail = userDescEmail.Default.(string)
+	// userDescPublicKey is the schema descriptor for public_key field.
+	userDescPublicKey := userFields[5].Descriptor()
+	// user.DefaultPublicKey holds the default value on creation for the public_key field.
+	user.DefaultPublicKey = userDescPublicKey.Default.(string)
+	// userDescPrivateKey is the schema descriptor for private_key field.
+	userDescPrivateKey := userFields[6].Descriptor()
+	// user.DefaultPrivateKey holds the default value on creation for the private_key field.
+	user.DefaultPrivateKey = userDescPrivateKey.Default.(string)
 	// userDescID is the schema descriptor for id field.
 	userDescID := userFields[0].Descriptor()
 	// user.IDValidator is a validator for the "id" field. It is called by the builders before save.

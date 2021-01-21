@@ -15,6 +15,10 @@ const (
 	FieldTel = "tel"
 	// FieldEmail holds the string denoting the email field in the database.
 	FieldEmail = "email"
+	// FieldPublicKey holds the string denoting the public_key field in the database.
+	FieldPublicKey = "public_key"
+	// FieldPrivateKey holds the string denoting the private_key field in the database.
+	FieldPrivateKey = "private_key"
 	// FieldRtime holds the string denoting the rtime field in the database.
 	FieldRtime = "rtime"
 
@@ -29,6 +33,8 @@ var Columns = []string{
 	FieldPassword,
 	FieldTel,
 	FieldEmail,
+	FieldPublicKey,
+	FieldPrivateKey,
 	FieldRtime,
 }
 
@@ -51,6 +57,10 @@ var (
 	DefaultTel string
 	// DefaultEmail holds the default value on creation for the "email" field.
 	DefaultEmail string
+	// DefaultPublicKey holds the default value on creation for the "public_key" field.
+	DefaultPublicKey string
+	// DefaultPrivateKey holds the default value on creation for the "private_key" field.
+	DefaultPrivateKey string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(int) error
 )

@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-	"way-jasy-cron/cron/internal/model/ent"
 	"log"
 	"testing"
 	"time"
+	"way-jasy-cron/cron/internal/model/ent"
 )
 
 func TestJob(t *testing.T) {
