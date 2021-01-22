@@ -66,3 +66,5 @@ func (m *Manager) ListJob(ctx context.Context, req *ent_ex.ListJobOptions) (jobs
 func (m *Manager) ListAllRunningJobs(ctx context.Context) (jobs []*ent.Job, err error) {
 	return m.Client.Job.Query().Where(job.StatusEQ(int(ent_ex.JobRunning))).All(ctx)
 }
+
+//docker run --name nginx -d -p 80:80 -v /e/docker-nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v /e/docker-nginx/html:/etc/nginx/html -v /e/docker-nginx/logs:/var/log/nginx nginx
