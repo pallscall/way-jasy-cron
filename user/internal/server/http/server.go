@@ -2,15 +2,15 @@ package http
 
 import (
 	"github.com/go-kratos/kratos/pkg/conf/paladin"
-	"github.com/go-kratos/kratos/pkg/net/rpc/warden"
-	utilerr "way-jasy-cron/common/util/err"
-	"way-jasy-cron/user/internal/service"
-	"net/http"
-	"sync"
-	pb "way-jasy-cron/user/userapi"
-
 	"github.com/go-kratos/kratos/pkg/log"
 	bm "github.com/go-kratos/kratos/pkg/net/http/blademaster"
+	"github.com/go-kratos/kratos/pkg/net/rpc/warden"
+	"net/http"
+	"sync"
+	utilerr "way-jasy-cron/common/util/err"
+	"way-jasy-cron/user/internal/server/grpc"
+	"way-jasy-cron/user/internal/service"
+	pb "way-jasy-cron/user/userapi"
 )
 
 var (
@@ -64,7 +64,7 @@ func ping(ctx *bm.Context) {
 	}
 }
 
-func MustStart() {
+func MustStart(s *service.Service) {
 	var c struct {
 		Server *bm.ServerConfig
 		Auth   *warden.ClientConfig
@@ -81,8 +81,8 @@ func MustStart() {
 		defer wg.Done()
 		initRouter(e)
 		utilerr.Check(e.Start())
-		svc = service.New()
-		pb.RegisterUserBMServer(e, svc)
+		svc = s
+		pb.RegisterTokenVerifyBMServer(e, &grpc.Server{Svc: s})
 	}()
 	wg.Wait()
 }

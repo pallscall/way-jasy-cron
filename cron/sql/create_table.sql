@@ -10,7 +10,7 @@ CREATE TABLE `jobs`
     `updater`       varchar(32)      NOT NULL DEFAULT 'admin' COMMENT '更新者',
     `method`        VARCHAR(10)      NOT NULL DEFAULT 'GET' COMMENT '请求方法',
     `body`          text             NOT NULL COMMENT '请求体',
-    `header`        varchar(1024)    NOT NULL DEFAULT '' COMMENT '请求头',
+    `header`        varchar(1024)    NOT NULL DEFAULT '[{"key":"","value":""}]' COMMENT '请求头',
     `stoppable`     int(1)           NOT NULL DEFAULT 0 COMMENT '任务失败是否停止',
     `ctime`         datetime         NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `mtime`         datetime         NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',

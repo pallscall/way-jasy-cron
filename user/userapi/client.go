@@ -9,16 +9,16 @@ import (
 )
 
 // AppID .
-const AppID = "TODO: ADD APP ID"
+const AppID = "127.0.0.1:9001"
 
 // NewClient new grpc client
-func NewClient(cfg *warden.ClientConfig, opts ...grpc.DialOption) (UserClient, error) {
+func NewClient(cfg *warden.ClientConfig, opts ...grpc.DialOption) (TokenVerifyClient, error) {
 	client := warden.NewClient(cfg, opts...)
-	cc, err := client.Dial(context.Background(), fmt.Sprintf("discovery://default/%s", AppID))
+	cc, err := client.Dial(context.Background(), fmt.Sprintf("direct://default/%s", AppID))
 	if err != nil {
 		return nil, err
 	}
-	return NewUserClient(cc), nil
+	return NewTokenVerifyClient(cc), nil
 }
 
 // 生成 gRPC 代码

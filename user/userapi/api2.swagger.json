@@ -16,9 +16,9 @@
         "application/json"
     ],
     "paths": {
-        "/user/login": {
+        "/user.v2.TokenVerify/Verify": {
             "get": {
-                "summary": "/user/login",
+                "summary": "/user.v2.TokenVerify/Verify",
                 "responses": {
                     "200": {
                         "description": "A successful response.",
@@ -32,7 +32,7 @@
                                     "type": "string"
                                 },
                                 "data": {
-                                    "$ref": "#/definitions/.demo.service.v2.LoginResp"
+                                    "$ref": "#/definitions/.user.v2.VerifyReply"
                                 }
                             }
                         }
@@ -40,47 +40,47 @@
                 },
                 "parameters": [
                     {
-                        "name": "username",
+                        "name": "accessKey",
                         "in": "query",
                         "required": true,
                         "type": "string"
                     },
                     {
-                        "name": "passwd",
+                        "name": "token",
                         "in": "query",
                         "required": true,
                         "type": "string"
                     }
                 ],
                 "tags": [
-                    "demo.service.v2.User"
+                    "user.v2.TokenVerify"
                 ]
             }
         }
     },
     "definitions": {
-        ".demo.service.v2.LoginReq": {
+        ".user.v2.VerifyReply": {
             "type": "object",
             "properties": {
-                "username": {
+                "code": {
+                    "type": "integer"
+                }
+            }
+        },
+        ".user.v2.VerifyReq": {
+            "type": "object",
+            "properties": {
+                "accessKey": {
                     "type": "string"
                 },
-                "passwd": {
+                "token": {
                     "type": "string"
                 }
             },
             "required": [
-                "username",
-                "passwd"
+                "accessKey",
+                "token"
             ]
-        },
-        ".demo.service.v2.LoginResp": {
-            "type": "object",
-            "properties": {
-                "content": {
-                    "type": "string"
-                }
-            }
         }
     }
 }

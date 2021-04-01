@@ -43,7 +43,7 @@ var (
 
 func initRouter(e *bm.Engine) {
 	e.Ping(ping)
-	g := e.Group("/cron",middleware.Verify)
+	g := e.Group("/cron",middleware.Verify, Verify)
 	{
 		h := g.Group("/http")
 		{

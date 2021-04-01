@@ -31,26 +31,26 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type LoginReq struct {
-	Username             string   `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty" form:"username" validate:"required"`
-	Passwd               string   `protobuf:"bytes,2,opt,name=passwd,proto3" json:"passwd,omitempty" form:"passwd" validate:"required"`
+type VerifyReq struct {
+	AccessKey            string   `protobuf:"bytes,1,opt,name=accessKey,proto3" json:"accessKey,omitempty" json:"access_key" validate:"required"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty" json:"token" validate:"required"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *LoginReq) Reset()         { *m = LoginReq{} }
-func (m *LoginReq) String() string { return proto.CompactTextString(m) }
-func (*LoginReq) ProtoMessage()    {}
-func (*LoginReq) Descriptor() ([]byte, []int) {
+func (m *VerifyReq) Reset()         { *m = VerifyReq{} }
+func (m *VerifyReq) String() string { return proto.CompactTextString(m) }
+func (*VerifyReq) ProtoMessage()    {}
+func (*VerifyReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_592802a36db5ccc7, []int{0}
 }
-func (m *LoginReq) XXX_Unmarshal(b []byte) error {
+func (m *VerifyReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *LoginReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *VerifyReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_LoginReq.Marshal(b, m, deterministic)
+		return xxx_messageInfo_VerifyReq.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -60,37 +60,37 @@ func (m *LoginReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-func (m *LoginReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_LoginReq.Merge(m, src)
+func (m *VerifyReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_VerifyReq.Merge(m, src)
 }
-func (m *LoginReq) XXX_Size() int {
+func (m *VerifyReq) XXX_Size() int {
 	return m.Size()
 }
-func (m *LoginReq) XXX_DiscardUnknown() {
-	xxx_messageInfo_LoginReq.DiscardUnknown(m)
+func (m *VerifyReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_VerifyReq.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_LoginReq proto.InternalMessageInfo
+var xxx_messageInfo_VerifyReq proto.InternalMessageInfo
 
-type LoginResp struct {
-	Content              string   `protobuf:"bytes,1,opt,name=Content,proto3" json:"content"`
+type VerifyReply struct {
+	Code                 int32    `protobuf:"varint,1,opt,name=code,proto3" json:"code"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *LoginResp) Reset()         { *m = LoginResp{} }
-func (m *LoginResp) String() string { return proto.CompactTextString(m) }
-func (*LoginResp) ProtoMessage()    {}
-func (*LoginResp) Descriptor() ([]byte, []int) {
+func (m *VerifyReply) Reset()         { *m = VerifyReply{} }
+func (m *VerifyReply) String() string { return proto.CompactTextString(m) }
+func (*VerifyReply) ProtoMessage()    {}
+func (*VerifyReply) Descriptor() ([]byte, []int) {
 	return fileDescriptor_592802a36db5ccc7, []int{1}
 }
-func (m *LoginResp) XXX_Unmarshal(b []byte) error {
+func (m *VerifyReply) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *LoginResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *VerifyReply) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_LoginResp.Marshal(b, m, deterministic)
+		return xxx_messageInfo_VerifyReply.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -100,48 +100,47 @@ func (m *LoginResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-func (m *LoginResp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_LoginResp.Merge(m, src)
+func (m *VerifyReply) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_VerifyReply.Merge(m, src)
 }
-func (m *LoginResp) XXX_Size() int {
+func (m *VerifyReply) XXX_Size() int {
 	return m.Size()
 }
-func (m *LoginResp) XXX_DiscardUnknown() {
-	xxx_messageInfo_LoginResp.DiscardUnknown(m)
+func (m *VerifyReply) XXX_DiscardUnknown() {
+	xxx_messageInfo_VerifyReply.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_LoginResp proto.InternalMessageInfo
+var xxx_messageInfo_VerifyReply proto.InternalMessageInfo
 
 func init() {
-	proto.RegisterType((*LoginReq)(nil), "demo.service.v2.LoginReq")
-	proto.RegisterType((*LoginResp)(nil), "demo.service.v2.LoginResp")
+	proto.RegisterType((*VerifyReq)(nil), "user.v2.VerifyReq")
+	proto.RegisterType((*VerifyReply)(nil), "user.v2.VerifyReply")
 }
 
 func init() { proto.RegisterFile("api2.proto", fileDescriptor_592802a36db5ccc7) }
 
 var fileDescriptor_592802a36db5ccc7 = []byte{
-	// 332 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x90, 0xbf, 0x4a, 0x33, 0x41,
-	0x14, 0xc5, 0xb3, 0xe1, 0x23, 0x7f, 0x26, 0x7c, 0x08, 0x6b, 0x13, 0x57, 0xdd, 0xc4, 0x91, 0xa0,
-	0x8d, 0xbb, 0xb0, 0x76, 0x01, 0x9b, 0xa4, 0xb5, 0x0a, 0xc4, 0xc2, 0x42, 0x98, 0x64, 0x6f, 0xd6,
-	0x81, 0xdd, 0xb9, 0x93, 0x99, 0xd9, 0x88, 0xad, 0x0f, 0x60, 0x63, 0xe3, 0x23, 0xa5, 0x14, 0xec,
-	0x83, 0x46, 0x2b, 0xcb, 0x3c, 0x81, 0x64, 0x77, 0xa3, 0x20, 0xda, 0xcd, 0xdc, 0xdf, 0x39, 0x87,
-	0x7b, 0x2e, 0x21, 0x4c, 0xf2, 0xc0, 0x93, 0x0a, 0x0d, 0xda, 0x5b, 0x21, 0x24, 0xe8, 0x69, 0x50,
-	0x33, 0x3e, 0x06, 0x6f, 0x16, 0x38, 0x27, 0x11, 0x37, 0xd7, 0xe9, 0xc8, 0x1b, 0x63, 0xe2, 0x47,
-	0x18, 0xa1, 0x9f, 0xe9, 0x46, 0xe9, 0x24, 0xfb, 0x65, 0x9f, 0xec, 0x95, 0xfb, 0x9d, 0xdd, 0x08,
-	0x31, 0x8a, 0xe1, 0x5b, 0x05, 0x89, 0x34, 0xb7, 0x05, 0xdc, 0x2b, 0x20, 0x93, 0xdc, 0x67, 0x42,
-	0xa0, 0x61, 0x86, 0xa3, 0xd0, 0x39, 0xa5, 0xf7, 0x16, 0xa9, 0x9d, 0x63, 0xc4, 0xc5, 0x00, 0xa6,
-	0x76, 0x9f, 0xd4, 0x52, 0x0d, 0x4a, 0xb0, 0x04, 0x9a, 0x56, 0xdb, 0x3a, 0xae, 0xf7, 0x8e, 0x56,
-	0x8b, 0xd6, 0xe1, 0x04, 0x55, 0xd2, 0xa5, 0x1b, 0x42, 0xdb, 0x33, 0x16, 0xf3, 0x90, 0x19, 0xe8,
-	0x52, 0x05, 0xd3, 0x94, 0x2b, 0x08, 0xe9, 0xe0, 0xcb, 0x68, 0x9f, 0x91, 0x8a, 0x64, 0x5a, 0xdf,
-	0x84, 0xcd, 0x72, 0x16, 0xd1, 0x59, 0x2d, 0x5a, 0x07, 0x79, 0x44, 0x3e, 0xff, 0x3d, 0xa0, 0x30,
-	0xd1, 0x80, 0xd4, 0x8b, 0x7d, 0xb4, 0xb4, 0x3b, 0xa4, 0xda, 0x47, 0x61, 0x40, 0x98, 0x62, 0x9f,
-	0xc6, 0xc7, 0xa2, 0x55, 0x1d, 0xe7, 0xa3, 0xc1, 0x86, 0x05, 0x57, 0xe4, 0xdf, 0x50, 0x83, 0xb2,
-	0x2f, 0x8a, 0x2e, 0x43, 0x15, 0xdb, 0x3b, 0xde, 0x8f, 0xa3, 0x7a, 0x9b, 0x9a, 0x8e, 0xf3, 0x17,
-	0xd2, 0x92, 0x6e, 0xdf, 0x3d, 0xbf, 0x3f, 0x94, 0xff, 0xdb, 0x0d, 0x7f, 0x5d, 0xc8, 0x8f, 0xd7,
-	0xa0, 0xb7, 0x3f, 0x7f, 0x75, 0x4b, 0xf3, 0xa5, 0x6b, 0x3d, 0x2d, 0x5d, 0xeb, 0x65, 0xe9, 0x5a,
-	0x8f, 0x6f, 0x6e, 0xe9, 0xb2, 0xba, 0x56, 0x30, 0xc9, 0x47, 0x95, 0xec, 0x94, 0xa7, 0x9f, 0x01,
-	0x00, 0x00, 0xff, 0xff, 0x9c, 0xba, 0xd8, 0x76, 0xd3, 0x01, 0x00, 0x00,
+	// 306 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x6c, 0x91, 0xb1, 0x4e, 0xc3, 0x30,
+	0x10, 0x40, 0x6b, 0x44, 0x0b, 0x75, 0x37, 0x8b, 0xa1, 0x2a, 0x25, 0xad, 0x2c, 0x90, 0x40, 0x88,
+	0x54, 0x0a, 0x5b, 0x37, 0xba, 0x30, 0xb0, 0x55, 0x88, 0x81, 0x05, 0xb9, 0xe9, 0x35, 0x98, 0xa6,
+	0x39, 0x37, 0x71, 0x2a, 0xf9, 0x2f, 0x18, 0xf9, 0xa4, 0x8e, 0x7c, 0x41, 0x04, 0x61, 0x63, 0xec,
+	0x17, 0x20, 0xec, 0x40, 0x07, 0x58, 0xac, 0xbb, 0x7b, 0x7e, 0xa7, 0xf3, 0x99, 0x52, 0xa1, 0x64,
+	0xe0, 0xab, 0x14, 0x35, 0xb2, 0xbd, 0x3c, 0x83, 0xd4, 0x5f, 0x05, 0x9d, 0x8b, 0x48, 0xea, 0xc7,
+	0x7c, 0xe2, 0x87, 0xb8, 0x18, 0x44, 0x18, 0xe1, 0xc0, 0xf2, 0x49, 0x3e, 0xb3, 0x99, 0x4d, 0x6c,
+	0xe4, 0xbc, 0xce, 0x61, 0x84, 0x18, 0xc5, 0xb0, 0xbd, 0x05, 0x0b, 0xa5, 0x4d, 0x05, 0xbb, 0x15,
+	0x14, 0x4a, 0x0e, 0x44, 0x92, 0xa0, 0x16, 0x5a, 0x62, 0x92, 0x39, 0xca, 0x9f, 0x09, 0x6d, 0xde,
+	0x41, 0x2a, 0x67, 0x66, 0x0c, 0x4b, 0x76, 0x4d, 0x9b, 0x22, 0x0c, 0x21, 0xcb, 0x6e, 0xc0, 0xb4,
+	0x49, 0x9f, 0x9c, 0x36, 0x47, 0x67, 0x9b, 0xa2, 0x77, 0xf2, 0x94, 0x61, 0x32, 0xe4, 0x0e, 0x3d,
+	0xcc, 0xc1, 0xf0, 0xfe, 0x4a, 0xc4, 0x72, 0x2a, 0x34, 0x0c, 0x79, 0x0a, 0xcb, 0x5c, 0xa6, 0x30,
+	0xe5, 0xe3, 0xad, 0xcb, 0x86, 0xb4, 0xae, 0x71, 0x0e, 0x49, 0x7b, 0xc7, 0x36, 0x39, 0xde, 0x14,
+	0xbd, 0xbe, 0x6b, 0x62, 0xcb, 0xff, 0xfb, 0x4e, 0xe1, 0xe7, 0xb4, 0xf5, 0x33, 0x91, 0x8a, 0x0d,
+	0xeb, 0xd2, 0xdd, 0x10, 0xa7, 0x60, 0xc7, 0xa9, 0x8f, 0xf6, 0x3f, 0x8b, 0x9e, 0xcd, 0xc7, 0xf6,
+	0x0c, 0xae, 0x68, 0xeb, 0xf6, 0xdb, 0x72, 0x06, 0x0b, 0x68, 0xa3, 0x8a, 0x98, 0x5f, 0x2d, 0xd3,
+	0xff, 0x7d, 0x5e, 0xe7, 0xe0, 0x4f, 0x4d, 0xc5, 0x66, 0x74, 0xb4, 0x7e, 0xf7, 0x6a, 0xeb, 0xd2,
+	0x23, 0xaf, 0xa5, 0x47, 0xde, 0x4a, 0x8f, 0xbc, 0x7c, 0x78, 0xb5, 0x7b, 0xfb, 0x17, 0x42, 0xc9,
+	0x49, 0xc3, 0x2e, 0xea, 0xf2, 0x2b, 0x00, 0x00, 0xff, 0xff, 0x0f, 0x5e, 0xf4, 0x69, 0xa9, 0x01,
+	0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -152,79 +151,79 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// UserClient is the client API for User service.
+// TokenVerifyClient is the client API for TokenVerify service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type UserClient interface {
-	LoginUrl(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
+type TokenVerifyClient interface {
+	Verify(ctx context.Context, in *VerifyReq, opts ...grpc.CallOption) (*VerifyReply, error)
 }
 
-type userClient struct {
+type tokenVerifyClient struct {
 	cc *grpc.ClientConn
 }
 
-func NewUserClient(cc *grpc.ClientConn) UserClient {
-	return &userClient{cc}
+func NewTokenVerifyClient(cc *grpc.ClientConn) TokenVerifyClient {
+	return &tokenVerifyClient{cc}
 }
 
-func (c *userClient) LoginUrl(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error) {
-	out := new(LoginResp)
-	err := c.cc.Invoke(ctx, "/demo.service.v2.User/LoginUrl", in, out, opts...)
+func (c *tokenVerifyClient) Verify(ctx context.Context, in *VerifyReq, opts ...grpc.CallOption) (*VerifyReply, error) {
+	out := new(VerifyReply)
+	err := c.cc.Invoke(ctx, "/user.v2.TokenVerify/Verify", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// UserServer is the server API for User service.
-type UserServer interface {
-	LoginUrl(context.Context, *LoginReq) (*LoginResp, error)
+// TokenVerifyServer is the server API for TokenVerify service.
+type TokenVerifyServer interface {
+	Verify(context.Context, *VerifyReq) (*VerifyReply, error)
 }
 
-// UnimplementedUserServer can be embedded to have forward compatible implementations.
-type UnimplementedUserServer struct {
+// UnimplementedTokenVerifyServer can be embedded to have forward compatible implementations.
+type UnimplementedTokenVerifyServer struct {
 }
 
-func (*UnimplementedUserServer) LoginUrl(ctx context.Context, req *LoginReq) (*LoginResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method LoginUrl not implemented")
+func (*UnimplementedTokenVerifyServer) Verify(ctx context.Context, req *VerifyReq) (*VerifyReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Verify not implemented")
 }
 
-func RegisterUserServer(s *grpc.Server, srv UserServer) {
-	s.RegisterService(&_User_serviceDesc, srv)
+func RegisterTokenVerifyServer(s *grpc.Server, srv TokenVerifyServer) {
+	s.RegisterService(&_TokenVerify_serviceDesc, srv)
 }
 
-func _User_LoginUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LoginReq)
+func _TokenVerify_Verify_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VerifyReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServer).LoginUrl(ctx, in)
+		return srv.(TokenVerifyServer).Verify(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/demo.service.v2.User/LoginUrl",
+		FullMethod: "/user.v2.TokenVerify/Verify",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).LoginUrl(ctx, req.(*LoginReq))
+		return srv.(TokenVerifyServer).Verify(ctx, req.(*VerifyReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _User_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "demo.service.v2.User",
-	HandlerType: (*UserServer)(nil),
+var _TokenVerify_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "user.v2.TokenVerify",
+	HandlerType: (*TokenVerifyServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "LoginUrl",
-			Handler:    _User_LoginUrl_Handler,
+			MethodName: "Verify",
+			Handler:    _TokenVerify_Verify_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "api2.proto",
 }
 
-func (m *LoginReq) Marshal() (dAtA []byte, err error) {
+func (m *VerifyReq) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -234,12 +233,12 @@ func (m *LoginReq) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *LoginReq) MarshalTo(dAtA []byte) (int, error) {
+func (m *VerifyReq) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *LoginReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *VerifyReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -248,24 +247,24 @@ func (m *LoginReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.Passwd) > 0 {
-		i -= len(m.Passwd)
-		copy(dAtA[i:], m.Passwd)
-		i = encodeVarintApi2(dAtA, i, uint64(len(m.Passwd)))
+	if len(m.Token) > 0 {
+		i -= len(m.Token)
+		copy(dAtA[i:], m.Token)
+		i = encodeVarintApi2(dAtA, i, uint64(len(m.Token)))
 		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.Username) > 0 {
-		i -= len(m.Username)
-		copy(dAtA[i:], m.Username)
-		i = encodeVarintApi2(dAtA, i, uint64(len(m.Username)))
+	if len(m.AccessKey) > 0 {
+		i -= len(m.AccessKey)
+		copy(dAtA[i:], m.AccessKey)
+		i = encodeVarintApi2(dAtA, i, uint64(len(m.AccessKey)))
 		i--
 		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
 
-func (m *LoginResp) Marshal() (dAtA []byte, err error) {
+func (m *VerifyReply) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -275,12 +274,12 @@ func (m *LoginResp) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *LoginResp) MarshalTo(dAtA []byte) (int, error) {
+func (m *VerifyReply) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *LoginResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *VerifyReply) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -289,12 +288,10 @@ func (m *LoginResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.Content) > 0 {
-		i -= len(m.Content)
-		copy(dAtA[i:], m.Content)
-		i = encodeVarintApi2(dAtA, i, uint64(len(m.Content)))
+	if m.Code != 0 {
+		i = encodeVarintApi2(dAtA, i, uint64(m.Code))
 		i--
-		dAtA[i] = 0xa
+		dAtA[i] = 0x8
 	}
 	return len(dAtA) - i, nil
 }
@@ -310,17 +307,17 @@ func encodeVarintApi2(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
-func (m *LoginReq) Size() (n int) {
+func (m *VerifyReq) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.Username)
+	l = len(m.AccessKey)
 	if l > 0 {
 		n += 1 + l + sovApi2(uint64(l))
 	}
-	l = len(m.Passwd)
+	l = len(m.Token)
 	if l > 0 {
 		n += 1 + l + sovApi2(uint64(l))
 	}
@@ -330,15 +327,14 @@ func (m *LoginReq) Size() (n int) {
 	return n
 }
 
-func (m *LoginResp) Size() (n int) {
+func (m *VerifyReply) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.Content)
-	if l > 0 {
-		n += 1 + l + sovApi2(uint64(l))
+	if m.Code != 0 {
+		n += 1 + sovApi2(uint64(m.Code))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -352,7 +348,7 @@ func sovApi2(x uint64) (n int) {
 func sozApi2(x uint64) (n int) {
 	return sovApi2(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-func (m *LoginReq) Unmarshal(dAtA []byte) error {
+func (m *VerifyReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -375,15 +371,15 @@ func (m *LoginReq) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: LoginReq: wiretype end group for non-group")
+			return fmt.Errorf("proto: VerifyReq: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: LoginReq: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: VerifyReq: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Username", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field AccessKey", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -411,11 +407,11 @@ func (m *LoginReq) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Username = string(dAtA[iNdEx:postIndex])
+			m.AccessKey = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Passwd", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Token", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -443,7 +439,7 @@ func (m *LoginReq) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Passwd = string(dAtA[iNdEx:postIndex])
+			m.Token = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -470,7 +466,7 @@ func (m *LoginReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *LoginResp) Unmarshal(dAtA []byte) error {
+func (m *VerifyReply) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -493,17 +489,17 @@ func (m *LoginResp) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: LoginResp: wiretype end group for non-group")
+			return fmt.Errorf("proto: VerifyReply: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: LoginResp: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: VerifyReply: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Content", wireType)
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Code", wireType)
 			}
-			var stringLen uint64
+			m.Code = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowApi2
@@ -513,24 +509,11 @@ func (m *LoginResp) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				m.Code |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthApi2
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthApi2
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Content = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipApi2(dAtA[iNdEx:])

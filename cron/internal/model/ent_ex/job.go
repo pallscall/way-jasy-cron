@@ -63,6 +63,7 @@ type CronResp struct {
 }
 
 type closer func(ctx context.Context, id, opt int) error
+type logger func(ctx context.Context, msg, operator string) error
 
 type JobExecutor struct {
 	job *ent.Job
@@ -71,6 +72,7 @@ type JobExecutor struct {
 	RetryCount     int
 	RetryTempCount int
 	email          *mail.Manager
+	logger func(ctx context.Context, msg, operator string) error
 }
 
 type Manager struct {
@@ -98,6 +100,7 @@ func (m *Manager) Create(
 	closer closer,
 	client *http.Client,
 	email *mail.Manager,
+	logger logger,
 ) *JobExecutor {
 	return &JobExecutor{
 		job: job,
@@ -106,6 +109,7 @@ func (m *Manager) Create(
 		RetryCount: m.RetryCount,
 		RetryTempCount: m.RetryCount,
 		email: email,
+		logger: logger,
 	}
 }
 
@@ -122,6 +126,7 @@ const errMsg = `定时任务出错通知
 	您的任务已被禁用！请联系相关人员进行处理`
 
 func (j *JobExecutor) Run() {
+	j.logger(context.TODO(), fmt.Sprintf("任务id(%d)开始执行", j.job.ID), j.job.Creator)
 	var (
 		err error
 		request *http.Request

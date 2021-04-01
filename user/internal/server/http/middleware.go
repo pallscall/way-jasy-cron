@@ -21,9 +21,13 @@ func openVerify(ctx *bm.Context) {
 
 func verifyLogin(ctx *bm.Context) {
 	s := ctx.Request.Header.Get(_openSession)
-	if err := svc.Verify(ctx, s); err != nil {
+	var (
+		token string
+		err error
+	)
+	if token, err = svc.Verify(ctx, s); err != nil {
 		ctx.JSON(nil, err)
 		ctx.Abort()
 	}
-	ctx.JSON(nil, nil)
+	ctx.JSON(token, nil)
 }

@@ -47,7 +47,7 @@ func (m *Manager) StopJob(ctx context.Context, id int) error {
 }
 
 func (m *Manager) ListJob(ctx context.Context, req *ent_ex.ListJobOptions) (jobs []*ent.Job, total int, err error) {
-	total, err = m.Client.Job.Query().Where(job.StatusNEQ(int(ent_ex.JobDelete))).Count(ctx)
+	total, err = m.Client.Job.Query().Where(job.StatusNEQ(int(ent_ex.JobDelete))).Where(job.CreatorEQ(req.Creator)).Count(ctx)
 	if err != nil {
 		log.Error("count total err:(%v)", err)
 		return nil, 0, err

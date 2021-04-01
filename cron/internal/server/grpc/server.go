@@ -37,7 +37,11 @@ type server struct {
 //Ping(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
 //SayHello(context.Context, *HelloReq) (*emptypb.Empty, error)
 //SayHelloURL(context.Context, *HelloReq) (*HelloResp, error)
-func (s *server) Login(ctx context.Context, req *pb.LoginReq) (*pb.LoginResp, error) {
-	return nil, nil
+func (s *server) WriteLog(ctx context.Context, req *pb.WriteLogReq) (*pb.NoReply, error) {
+	return s.svc.WriteLog(ctx, req)
+}
+
+func (s *server) Verify(ctx context.Context, req *pb.VerifyReq) (*pb.VerifyReply, error) {
+	return s.svc.VerifyToken(ctx, req)
 }
 

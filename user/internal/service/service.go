@@ -2,14 +2,10 @@ package service
 
 import (
 	"context"
-	"fmt"
-	"github.com/go-kratos/kratos/pkg/conf/paladin"
-	"github.com/go-kratos/kratos/pkg/net/rpc/warden"
 	"sync"
-	pb2 "way-jasy-cron/cron/api"
-	pb "way-jasy-cron/user/userapi"
 	"way-jasy-cron/user/internal/dao/ent"
 	"way-jasy-cron/user/internal/dao/mysql"
+	"way-jasy-cron/user/internal/dao/redis"
 	//"github.com/google/wire"
 )
 
@@ -19,6 +15,7 @@ import (
 type Service struct {
 	ent         *ent.Manager
 	mysql		*mysql.Manager
+	redis       *redis.Manager
 	stop        chan bool
 	wg          sync.WaitGroup
 }
@@ -28,6 +25,7 @@ func New() *Service{
 	return &Service{
 		ent:     ent.New(),
 		mysql:   mysql.New(),
+		redis:   redis.New(),
 		stop:    make(chan bool, 1),
 	}
 
@@ -50,19 +48,3 @@ func (s *Service) Close(ctx context.Context) {
 	s.wg.Wait()
 }
 
-func (s *Service) LoginUrl(ctx context.Context, req *pb.LoginReq) (reply *pb.LoginResp, err error) {
-	fmt.Printf("server1 login username: %s, passwd: %s", req.Username, req.Passwd)
-
-	cfg := &warden.ClientConfig{}
-	paladin.Get("grpc.toml").UnmarshalTOML(cfg)
-
-	var demoClient pb2.JobClient
-	if demoClient,err = pb2.NewClient(cfg); err != nil {
-		panic(err)
-	}
-
-	reply2, err := demoClient.Login(ctx, (*pb2.LoginReq)(req))
-	reply = (*pb.LoginResp)(reply2)
-
-	return
-}

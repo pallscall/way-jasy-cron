@@ -1,0 +1,39 @@
+// 定义项目 API 的 proto 文件 可以同时描述 gRPC 和 HTTP API
+// protobuf 文件参考:
+//  - https://developers.google.com/protocol-buffers/
+syntax = "proto3";
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+// package 命名使用 {appid}.{version} 的方式, version 形如 v1, v2 ..
+package cron.logger.v1;
+
+// NOTE: 最后请删除这些无用的注释 (゜-゜)つロ
+
+option go_package = "cron_log.v1";
+option (gogoproto.goproto_getters_all) = false;
+
+service CronLogger {
+  rpc WriteLog(WriteLogReq) returns (NoReply);
+  rpc Verify(VerifyReq) returns (VerifyReply);
+}
+
+message WriteLogReq {
+  string opt = 1 [(gogoproto.moretags) = 'json:"opt" validate:"required"'];
+  string operator = 2 [(gogoproto.moretags) = 'json:"operator"'];
+  google.protobuf.Timestamp ctime = 3 [(gogoproto.stdtime) = true];
+}
+
+message NoReply{}
+
+message VerifyReq {
+  string accessKey = 1 [(gogoproto.moretags) = 'json:"access_key" validate:"required"'];
+  string token = 2 [(gogoproto.moretags) = 'json:"token" validate:"required"'];
+}
+
+message VerifyReply {
+  int32 code = 1 [(gogoproto.jsontag) = 'code'];
+}
+

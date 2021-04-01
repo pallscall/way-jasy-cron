@@ -14,11 +14,9 @@ import (
 var (
 	ws *warden.Server
 )
-func MustStart(svc *service.Service) {
-	ws = New(svc)
-}
+
 // New new a grpc server.
-func New(svc *service.Service) (ws *warden.Server) {
+func New(svc *service.Service) (ws *warden.Server, err error) {
 	var (
 		cfg warden.ServerConfig
 		ct paladin.TOML
@@ -26,19 +24,22 @@ func New(svc *service.Service) (ws *warden.Server) {
 	utilerr.Check(paladin.Get("grpc.toml").Unmarshal(&ct))
 	utilerr.Check(ct.Get("Server").UnmarshalTOML(&cfg))
 	ws = warden.NewServer(&cfg)
-	pb.RegisterUserServer(ws.Server(), &server{svc: svc})
-	ws, _ = ws.Start()
+	pb.RegisterTokenVerifyServer(ws.Server(), &Server{Svc: svc})
+	ws, err = ws.Start()
 	return
 }
 
-type server struct {
-	svc *service.Service
+type Server struct {
+	Svc *service.Service
 }
 
-//Ping(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
-//SayHello(context.Context, *HelloReq) (*emptypb.Empty, error)
-//SayHelloURL(context.Context, *HelloReq) (*HelloResp, error)
-func (s *server) LoginUrl(ctx context.Context, req *pb.LoginReq) (*pb.LoginResp, error) {
-	return s.svc.LoginUrl(ctx, req)
+func (s *Server)Verify(ctx context.Context, req *pb.VerifyReq)(*pb.VerifyReply, error)  {
+	code, err := s.Svc.VerifyToken(ctx, req.AccessKey, req.Token)
+	var reply *pb.VerifyReply
+	reply = &pb.VerifyReply{
+		Code: code,
+	}
+	//reply := &pb.VerifyReply{Code: code}
+	return reply, err
 }
 

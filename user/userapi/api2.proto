@@ -8,26 +8,22 @@ import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
 
 // package 命名使用 {appid}.{version} 的方式, version 形如 v1, v2 ..
-package demo.service.v2;
+package user.v2;
 
 // NOTE: 最后请删除这些无用的注释 (゜-゜)つロ
 
 option go_package = "userapi";
 option (gogoproto.goproto_getters_all) = false;
 
-service User {
-  rpc LoginUrl(LoginReq) returns (LoginResp){
-    option (google.api.http) = {
-      get: "/user/login"
-    };
-  };
+service TokenVerify {
+  rpc Verify(VerifyReq) returns (VerifyReply);
 }
 
-message LoginReq {
-  string username = 1 [(gogoproto.moretags) = 'form:"username" validate:"required"'];
-  string passwd = 2 [(gogoproto.moretags) = 'form:"passwd" validate:"required"'];
+message VerifyReq {
+  string accessKey = 1 [(gogoproto.moretags) = 'json:"access_key" validate:"required"'];
+  string token = 2 [(gogoproto.moretags) = 'json:"token" validate:"required"'];
 }
 
-message LoginResp {
-  string Content = 1 [(gogoproto.jsontag) = 'content'];
+message VerifyReply {
+  int32 code = 1 [(gogoproto.jsontag) = 'code'];
 }

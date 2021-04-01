@@ -24,26 +24,26 @@ var _ *bm.Context
 var _ context.Context
 var _ binding.StructValidator
 
-var PathUserLoginUrl = "/user/login"
+var PathTokenVerifyVerify = "/user.v2.TokenVerify/Verify"
 
-// UserBMServer is the server API for User service.
-type UserBMServer interface {
-	LoginUrl(ctx context.Context, req *LoginReq) (resp *LoginResp, err error)
+// TokenVerifyBMServer is the server API for TokenVerify service.
+type TokenVerifyBMServer interface {
+	Verify(ctx context.Context, req *VerifyReq) (resp *VerifyReply, err error)
 }
 
-var UserSvc UserBMServer
+var TokenVerifySvc TokenVerifyBMServer
 
-func userLoginUrl(c *bm.Context) {
-	p := new(LoginReq)
+func tokenVerifyVerify(c *bm.Context) {
+	p := new(VerifyReq)
 	if err := c.BindWith(p, binding.Default(c.Request.Method, c.Request.Header.Get("Content-Type"))); err != nil {
 		return
 	}
-	resp, err := UserSvc.LoginUrl(c, p)
+	resp, err := TokenVerifySvc.Verify(c, p)
 	c.JSON(resp, err)
 }
 
-// RegisterUserBMServer Register the blademaster route
-func RegisterUserBMServer(e *bm.Engine, server UserBMServer) {
-	UserSvc = server
-	e.GET("/user/login", userLoginUrl)
+// RegisterTokenVerifyBMServer Register the blademaster route
+func RegisterTokenVerifyBMServer(e *bm.Engine, server TokenVerifyBMServer) {
+	TokenVerifySvc = server
+	e.GET("/user.v2.TokenVerify/Verify", tokenVerifyVerify)
 }
