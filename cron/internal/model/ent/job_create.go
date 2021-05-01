@@ -146,16 +146,44 @@ func (jc *JobCreate) SetNillableHeader(s *string) *JobCreate {
 	return jc
 }
 
-// SetStoppable sets the "stoppable" field.
-func (jc *JobCreate) SetStoppable(i int) *JobCreate {
-	jc.mutation.SetStoppable(i)
+// SetCount sets the "count" field.
+func (jc *JobCreate) SetCount(i int) *JobCreate {
+	jc.mutation.SetCount(i)
 	return jc
 }
 
-// SetNillableStoppable sets the "stoppable" field if the given value is not nil.
-func (jc *JobCreate) SetNillableStoppable(i *int) *JobCreate {
+// SetNillableCount sets the "count" field if the given value is not nil.
+func (jc *JobCreate) SetNillableCount(i *int) *JobCreate {
 	if i != nil {
-		jc.SetStoppable(*i)
+		jc.SetCount(*i)
+	}
+	return jc
+}
+
+// SetRetry sets the "retry" field.
+func (jc *JobCreate) SetRetry(i int) *JobCreate {
+	jc.mutation.SetRetry(i)
+	return jc
+}
+
+// SetNillableRetry sets the "retry" field if the given value is not nil.
+func (jc *JobCreate) SetNillableRetry(i *int) *JobCreate {
+	if i != nil {
+		jc.SetRetry(*i)
+	}
+	return jc
+}
+
+// SetRetryTemp sets the "retry_temp" field.
+func (jc *JobCreate) SetRetryTemp(i int) *JobCreate {
+	jc.mutation.SetRetryTemp(i)
+	return jc
+}
+
+// SetNillableRetryTemp sets the "retry_temp" field if the given value is not nil.
+func (jc *JobCreate) SetNillableRetryTemp(i *int) *JobCreate {
+	if i != nil {
+		jc.SetRetryTemp(*i)
 	}
 	return jc
 }
@@ -296,9 +324,17 @@ func (jc *JobCreate) defaults() {
 		v := job.DefaultHeader
 		jc.mutation.SetHeader(v)
 	}
-	if _, ok := jc.mutation.Stoppable(); !ok {
-		v := job.DefaultStoppable
-		jc.mutation.SetStoppable(v)
+	if _, ok := jc.mutation.Count(); !ok {
+		v := job.DefaultCount
+		jc.mutation.SetCount(v)
+	}
+	if _, ok := jc.mutation.Retry(); !ok {
+		v := job.DefaultRetry
+		jc.mutation.SetRetry(v)
+	}
+	if _, ok := jc.mutation.RetryTemp(); !ok {
+		v := job.DefaultRetryTemp
+		jc.mutation.SetRetryTemp(v)
 	}
 	if _, ok := jc.mutation.Status(); !ok {
 		v := job.DefaultStatus
@@ -335,8 +371,14 @@ func (jc *JobCreate) check() error {
 	if _, ok := jc.mutation.Header(); !ok {
 		return &ValidationError{Name: "header", err: errors.New("ent: missing required field \"header\"")}
 	}
-	if _, ok := jc.mutation.Stoppable(); !ok {
-		return &ValidationError{Name: "stoppable", err: errors.New("ent: missing required field \"stoppable\"")}
+	if _, ok := jc.mutation.Count(); !ok {
+		return &ValidationError{Name: "count", err: errors.New("ent: missing required field \"count\"")}
+	}
+	if _, ok := jc.mutation.Retry(); !ok {
+		return &ValidationError{Name: "retry", err: errors.New("ent: missing required field \"retry\"")}
+	}
+	if _, ok := jc.mutation.RetryTemp(); !ok {
+		return &ValidationError{Name: "retry_temp", err: errors.New("ent: missing required field \"retry_temp\"")}
 	}
 	if _, ok := jc.mutation.Status(); !ok {
 		return &ValidationError{Name: "status", err: errors.New("ent: missing required field \"status\"")}
@@ -451,13 +493,29 @@ func (jc *JobCreate) createSpec() (*Job, *sqlgraph.CreateSpec) {
 		})
 		_node.Header = value
 	}
-	if value, ok := jc.mutation.Stoppable(); ok {
+	if value, ok := jc.mutation.Count(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
 			Value:  value,
-			Column: job.FieldStoppable,
+			Column: job.FieldCount,
 		})
-		_node.Stoppable = value
+		_node.Count = value
+	}
+	if value, ok := jc.mutation.Retry(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: job.FieldRetry,
+		})
+		_node.Retry = value
+	}
+	if value, ok := jc.mutation.RetryTemp(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: job.FieldRetryTemp,
+		})
+		_node.RetryTemp = value
 	}
 	if value, ok := jc.mutation.Status(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

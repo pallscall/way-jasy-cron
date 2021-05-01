@@ -28,3 +28,12 @@ func (m *Manager) CreateLog(ctx context.Context, req *pb.WriteLogReq) (*pb.NoRep
 	_, err := m.Client.Logger.Create().SetLog(req.Opt).SetOperator(req.Operator).Save(ctx)
 	return &pb.NoReply{}, err
 }
+
+func (m *Manager) Show(ctx context.Context) error{
+	l, err := m.Client.Logger.Query().Order(ent.Asc(logger.FieldID)).Limit(1).All(ctx)
+	if err != nil {
+		log.Error("(%v)", err)
+		return err
+	}
+	return m.Client.Logger.DeleteOne(l[0]).Exec(ctx)
+}

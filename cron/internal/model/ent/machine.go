@@ -28,6 +28,8 @@ type Machine struct {
 	Comment string `json:"comment,omitempty"`
 	// Command holds the value of the "command" field.
 	Command string `json:"command,omitempty"`
+	// Creator holds the value of the "creator" field.
+	Creator string `json:"creator,omitempty"`
 	// Status holds the value of the "status" field.
 	Status int `json:"status,omitempty"`
 	// Ctime holds the value of the "ctime" field.
@@ -43,7 +45,7 @@ func (*Machine) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case machine.FieldID, machine.FieldPort, machine.FieldStatus:
 			values[i] = &sql.NullInt64{}
-		case machine.FieldHost, machine.FieldUsername, machine.FieldPassword, machine.FieldComment, machine.FieldCommand:
+		case machine.FieldHost, machine.FieldUsername, machine.FieldPassword, machine.FieldComment, machine.FieldCommand, machine.FieldCreator:
 			values[i] = &sql.NullString{}
 		case machine.FieldCtime, machine.FieldMtime:
 			values[i] = &sql.NullTime{}
@@ -104,6 +106,12 @@ func (m *Machine) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				m.Command = value.String
 			}
+		case machine.FieldCreator:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field creator", values[i])
+			} else if value.Valid {
+				m.Creator = value.String
+			}
 		case machine.FieldStatus:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field status", values[i])
@@ -162,6 +170,8 @@ func (m *Machine) String() string {
 	builder.WriteString(m.Comment)
 	builder.WriteString(", command=")
 	builder.WriteString(m.Command)
+	builder.WriteString(", creator=")
+	builder.WriteString(m.Creator)
 	builder.WriteString(", status=")
 	builder.WriteString(fmt.Sprintf("%v", m.Status))
 	builder.WriteString(", ctime=")

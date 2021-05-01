@@ -16,7 +16,7 @@ func (m *Manager) QueryJobByID(ctx context.Context, id int)(*ent.Job, error) {
 func (m *Manager) CreateJob(ctx context.Context, j *ent.Job) error {
 	_, err := m.Client.Job.Create().
 		SetName(j.Name).SetBody(j.Body).SetComment(j.Comment).SetSpec(j.Spec).SetHeader(j.Header).
-		SetMethod(j.Method).SetCreator(j.Creator).SetStoppable(j.Stoppable).
+		SetMethod(j.Method).SetCreator(j.Creator).SetRetry(j.Retry).SetRetryTemp(j.Retry).SetCount(j.Count).
 		SetStatus(j.Status).SetUpdater(j.Updater).SetURL(j.URL).
 		Save(ctx)
 	return err
@@ -25,7 +25,7 @@ func (m *Manager) CreateJob(ctx context.Context, j *ent.Job) error {
 func (m *Manager) UpdateJob(ctx context.Context, j *ent.Job) error {
 	_, err := m.Client.Job.Update().
 		SetName(j.Name).SetBody(j.Body).SetComment(j.Comment).SetSpec(j.Spec).SetHeader(j.Header).
-		SetMethod(j.Method).SetCreator(j.Creator).SetStoppable(j.Stoppable).
+		SetMethod(j.Method).SetCreator(j.Creator).SetRetry(j.Retry).SetRetryTemp(j.Retry).SetCount(j.Count).
 		SetStatus(j.Status).SetUpdater(j.Updater).SetURL(j.URL).
 		Where(job.IDEQ(j.ID)).Save(context.TODO())
 	return err
@@ -62,9 +62,13 @@ func (m *Manager) ListJob(ctx context.Context, req *ent_ex.ListJobOptions) (jobs
 	return
 }
 
-
 func (m *Manager) ListAllRunningJobs(ctx context.Context) (jobs []*ent.Job, err error) {
-	return m.Client.Job.Query().Where(job.StatusEQ(int(ent_ex.JobRunning))).All(ctx)
+	return m.Client.Job.Query().Where(job.StatusEQ(int(ent_ex.JobRunning))).Where(job.CountGT(0)).All(ctx)
 }
+
+func (m *Manager) CountHttpJob(ctx context.Context, creator string) (total int, err error) {
+	return m.Client.Job.Query().Where(job.StatusNEQ(int(ent_ex.JobDelete))).Where(job.CreatorEQ(creator)).Count(ctx)
+}
+
 
 //docker run --name nginx -d -p 80:80 -v /e/docker-nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v /e/docker-nginx/html:/etc/nginx/html -v /e/docker-nginx/logs:/var/log/nginx nginx

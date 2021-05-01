@@ -4,6 +4,7 @@ import (
 	"context"
 	"sync"
 	"way-jasy-cron/user/internal/dao/ent"
+	"way-jasy-cron/user/internal/dao/mail"
 	"way-jasy-cron/user/internal/dao/mysql"
 	"way-jasy-cron/user/internal/dao/redis"
 	//"github.com/google/wire"
@@ -16,6 +17,7 @@ type Service struct {
 	ent         *ent.Manager
 	mysql		*mysql.Manager
 	redis       *redis.Manager
+	mail        *mail.Manager
 	stop        chan bool
 	wg          sync.WaitGroup
 }
@@ -26,6 +28,7 @@ func New() *Service{
 		ent:     ent.New(),
 		mysql:   mysql.New(),
 		redis:   redis.New(),
+		mail:    mail.New(),
 		stop:    make(chan bool, 1),
 	}
 

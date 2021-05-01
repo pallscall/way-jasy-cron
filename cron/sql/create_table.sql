@@ -11,7 +11,9 @@ CREATE TABLE `jobs`
     `method`        VARCHAR(10)      NOT NULL DEFAULT 'GET' COMMENT '请求方法',
     `body`          text             NOT NULL COMMENT '请求体',
     `header`        varchar(1024)    NOT NULL DEFAULT '[{"key":"","value":""}]' COMMENT '请求头',
-    `stoppable`     int(1)           NOT NULL DEFAULT 0 COMMENT '任务失败是否停止',
+    `count`         int(9)           NOT NULL DEFAULT 0 COMMENT '任务执行次数，为0时任务停止',
+    `retry`         int(9)           NOT NULL DEFAULT 0 COMMENT '失败重试次数，为0时任务停止',
+    `retry_temp`    int(9)           NOT NULL DEFAULT 0 COMMENT '失败重试次数恢复',
     `ctime`         datetime         NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `mtime`         datetime         NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
     PRIMARY KEY (`id`),
@@ -21,6 +23,7 @@ CREATE TABLE `jobs`
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8 COMMENT ='定时任务表';
+
 
 CREATE TABLE `machines`
 (

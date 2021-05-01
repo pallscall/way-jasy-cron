@@ -14,12 +14,14 @@ const (
 
 type ListShellJobReq struct {
 	ListBaseReq
+	Creator string `form:"creator"`
 	Host    string `form:"host"`
 	Comment string `form:"comment"`
 }
 
 type ListShellJobOptions struct {
 	ListBaseOptions
+	Creator string
 	Host    string
 	Comment string
 }
@@ -35,6 +37,7 @@ func (r ListShellJobReq) ToListShellJobOptions() (o *ListShellJobOptions) {
 			PN: r.PN,
 			PS: r.PS,
 		},
+		Creator: r.Creator,
 		Host:    r.Host,
 		Comment: r.Comment,
 	}

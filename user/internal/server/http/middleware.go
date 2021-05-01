@@ -31,3 +31,8 @@ func verifyLogin(ctx *bm.Context) {
 	}
 	ctx.JSON(token, nil)
 }
+
+func getUserInfo(ctx *bm.Context) {
+	s := ctx.Request.Header.Get(_openSession)
+	ctx.JSON(svc.GetUserInfo(ctx, s))
+}

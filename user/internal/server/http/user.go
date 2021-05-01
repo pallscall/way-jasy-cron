@@ -22,3 +22,4 @@ func getPublicKey(ctx *bm.Context) {
 	s := ctx.Request.Header.Get(_openSession)
 	ctx.JSON(svc.GetPublicKey(ctx, s))
 }
+

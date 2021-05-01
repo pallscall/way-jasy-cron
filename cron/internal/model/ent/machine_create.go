@@ -104,6 +104,20 @@ func (mc *MachineCreate) SetNillableCommand(s *string) *MachineCreate {
 	return mc
 }
 
+// SetCreator sets the "creator" field.
+func (mc *MachineCreate) SetCreator(s string) *MachineCreate {
+	mc.mutation.SetCreator(s)
+	return mc
+}
+
+// SetNillableCreator sets the "creator" field if the given value is not nil.
+func (mc *MachineCreate) SetNillableCreator(s *string) *MachineCreate {
+	if s != nil {
+		mc.SetCreator(*s)
+	}
+	return mc
+}
+
 // SetStatus sets the "status" field.
 func (mc *MachineCreate) SetStatus(i int) *MachineCreate {
 	mc.mutation.SetStatus(i)
@@ -228,6 +242,10 @@ func (mc *MachineCreate) defaults() {
 		v := machine.DefaultCommand
 		mc.mutation.SetCommand(v)
 	}
+	if _, ok := mc.mutation.Creator(); !ok {
+		v := machine.DefaultCreator
+		mc.mutation.SetCreator(v)
+	}
 	if _, ok := mc.mutation.Status(); !ok {
 		v := machine.DefaultStatus
 		mc.mutation.SetStatus(v)
@@ -253,6 +271,9 @@ func (mc *MachineCreate) check() error {
 	}
 	if _, ok := mc.mutation.Command(); !ok {
 		return &ValidationError{Name: "command", err: errors.New("ent: missing required field \"command\"")}
+	}
+	if _, ok := mc.mutation.Creator(); !ok {
+		return &ValidationError{Name: "creator", err: errors.New("ent: missing required field \"creator\"")}
 	}
 	if _, ok := mc.mutation.Status(); !ok {
 		return &ValidationError{Name: "status", err: errors.New("ent: missing required field \"status\"")}
@@ -342,6 +363,14 @@ func (mc *MachineCreate) createSpec() (*Machine, *sqlgraph.CreateSpec) {
 			Column: machine.FieldCommand,
 		})
 		_node.Command = value
+	}
+	if value, ok := mc.mutation.Creator(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: machine.FieldCreator,
+		})
+		_node.Creator = value
 	}
 	if value, ok := mc.mutation.Status(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

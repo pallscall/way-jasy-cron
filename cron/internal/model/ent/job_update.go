@@ -153,24 +153,66 @@ func (ju *JobUpdate) SetNillableHeader(s *string) *JobUpdate {
 	return ju
 }
 
-// SetStoppable sets the "stoppable" field.
-func (ju *JobUpdate) SetStoppable(i int) *JobUpdate {
-	ju.mutation.ResetStoppable()
-	ju.mutation.SetStoppable(i)
+// SetCount sets the "count" field.
+func (ju *JobUpdate) SetCount(i int) *JobUpdate {
+	ju.mutation.ResetCount()
+	ju.mutation.SetCount(i)
 	return ju
 }
 
-// SetNillableStoppable sets the "stoppable" field if the given value is not nil.
-func (ju *JobUpdate) SetNillableStoppable(i *int) *JobUpdate {
+// SetNillableCount sets the "count" field if the given value is not nil.
+func (ju *JobUpdate) SetNillableCount(i *int) *JobUpdate {
 	if i != nil {
-		ju.SetStoppable(*i)
+		ju.SetCount(*i)
 	}
 	return ju
 }
 
-// AddStoppable adds i to the "stoppable" field.
-func (ju *JobUpdate) AddStoppable(i int) *JobUpdate {
-	ju.mutation.AddStoppable(i)
+// AddCount adds i to the "count" field.
+func (ju *JobUpdate) AddCount(i int) *JobUpdate {
+	ju.mutation.AddCount(i)
+	return ju
+}
+
+// SetRetry sets the "retry" field.
+func (ju *JobUpdate) SetRetry(i int) *JobUpdate {
+	ju.mutation.ResetRetry()
+	ju.mutation.SetRetry(i)
+	return ju
+}
+
+// SetNillableRetry sets the "retry" field if the given value is not nil.
+func (ju *JobUpdate) SetNillableRetry(i *int) *JobUpdate {
+	if i != nil {
+		ju.SetRetry(*i)
+	}
+	return ju
+}
+
+// AddRetry adds i to the "retry" field.
+func (ju *JobUpdate) AddRetry(i int) *JobUpdate {
+	ju.mutation.AddRetry(i)
+	return ju
+}
+
+// SetRetryTemp sets the "retry_temp" field.
+func (ju *JobUpdate) SetRetryTemp(i int) *JobUpdate {
+	ju.mutation.ResetRetryTemp()
+	ju.mutation.SetRetryTemp(i)
+	return ju
+}
+
+// SetNillableRetryTemp sets the "retry_temp" field if the given value is not nil.
+func (ju *JobUpdate) SetNillableRetryTemp(i *int) *JobUpdate {
+	if i != nil {
+		ju.SetRetryTemp(*i)
+	}
+	return ju
+}
+
+// AddRetryTemp adds i to the "retry_temp" field.
+func (ju *JobUpdate) AddRetryTemp(i int) *JobUpdate {
+	ju.mutation.AddRetryTemp(i)
 	return ju
 }
 
@@ -372,18 +414,46 @@ func (ju *JobUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: job.FieldHeader,
 		})
 	}
-	if value, ok := ju.mutation.Stoppable(); ok {
+	if value, ok := ju.mutation.Count(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
 			Value:  value,
-			Column: job.FieldStoppable,
+			Column: job.FieldCount,
 		})
 	}
-	if value, ok := ju.mutation.AddedStoppable(); ok {
+	if value, ok := ju.mutation.AddedCount(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
 			Value:  value,
-			Column: job.FieldStoppable,
+			Column: job.FieldCount,
+		})
+	}
+	if value, ok := ju.mutation.Retry(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: job.FieldRetry,
+		})
+	}
+	if value, ok := ju.mutation.AddedRetry(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: job.FieldRetry,
+		})
+	}
+	if value, ok := ju.mutation.RetryTemp(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: job.FieldRetryTemp,
+		})
+	}
+	if value, ok := ju.mutation.AddedRetryTemp(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: job.FieldRetryTemp,
 		})
 	}
 	if value, ok := ju.mutation.Status(); ok {
@@ -570,24 +640,66 @@ func (juo *JobUpdateOne) SetNillableHeader(s *string) *JobUpdateOne {
 	return juo
 }
 
-// SetStoppable sets the "stoppable" field.
-func (juo *JobUpdateOne) SetStoppable(i int) *JobUpdateOne {
-	juo.mutation.ResetStoppable()
-	juo.mutation.SetStoppable(i)
+// SetCount sets the "count" field.
+func (juo *JobUpdateOne) SetCount(i int) *JobUpdateOne {
+	juo.mutation.ResetCount()
+	juo.mutation.SetCount(i)
 	return juo
 }
 
-// SetNillableStoppable sets the "stoppable" field if the given value is not nil.
-func (juo *JobUpdateOne) SetNillableStoppable(i *int) *JobUpdateOne {
+// SetNillableCount sets the "count" field if the given value is not nil.
+func (juo *JobUpdateOne) SetNillableCount(i *int) *JobUpdateOne {
 	if i != nil {
-		juo.SetStoppable(*i)
+		juo.SetCount(*i)
 	}
 	return juo
 }
 
-// AddStoppable adds i to the "stoppable" field.
-func (juo *JobUpdateOne) AddStoppable(i int) *JobUpdateOne {
-	juo.mutation.AddStoppable(i)
+// AddCount adds i to the "count" field.
+func (juo *JobUpdateOne) AddCount(i int) *JobUpdateOne {
+	juo.mutation.AddCount(i)
+	return juo
+}
+
+// SetRetry sets the "retry" field.
+func (juo *JobUpdateOne) SetRetry(i int) *JobUpdateOne {
+	juo.mutation.ResetRetry()
+	juo.mutation.SetRetry(i)
+	return juo
+}
+
+// SetNillableRetry sets the "retry" field if the given value is not nil.
+func (juo *JobUpdateOne) SetNillableRetry(i *int) *JobUpdateOne {
+	if i != nil {
+		juo.SetRetry(*i)
+	}
+	return juo
+}
+
+// AddRetry adds i to the "retry" field.
+func (juo *JobUpdateOne) AddRetry(i int) *JobUpdateOne {
+	juo.mutation.AddRetry(i)
+	return juo
+}
+
+// SetRetryTemp sets the "retry_temp" field.
+func (juo *JobUpdateOne) SetRetryTemp(i int) *JobUpdateOne {
+	juo.mutation.ResetRetryTemp()
+	juo.mutation.SetRetryTemp(i)
+	return juo
+}
+
+// SetNillableRetryTemp sets the "retry_temp" field if the given value is not nil.
+func (juo *JobUpdateOne) SetNillableRetryTemp(i *int) *JobUpdateOne {
+	if i != nil {
+		juo.SetRetryTemp(*i)
+	}
+	return juo
+}
+
+// AddRetryTemp adds i to the "retry_temp" field.
+func (juo *JobUpdateOne) AddRetryTemp(i int) *JobUpdateOne {
+	juo.mutation.AddRetryTemp(i)
 	return juo
 }
 
@@ -787,18 +899,46 @@ func (juo *JobUpdateOne) sqlSave(ctx context.Context) (_node *Job, err error) {
 			Column: job.FieldHeader,
 		})
 	}
-	if value, ok := juo.mutation.Stoppable(); ok {
+	if value, ok := juo.mutation.Count(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
 			Value:  value,
-			Column: job.FieldStoppable,
+			Column: job.FieldCount,
 		})
 	}
-	if value, ok := juo.mutation.AddedStoppable(); ok {
+	if value, ok := juo.mutation.AddedCount(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
 			Value:  value,
-			Column: job.FieldStoppable,
+			Column: job.FieldCount,
+		})
+	}
+	if value, ok := juo.mutation.Retry(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: job.FieldRetry,
+		})
+	}
+	if value, ok := juo.mutation.AddedRetry(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: job.FieldRetry,
+		})
+	}
+	if value, ok := juo.mutation.RetryTemp(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: job.FieldRetryTemp,
+		})
+	}
+	if value, ok := juo.mutation.AddedRetryTemp(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: job.FieldRetryTemp,
 		})
 	}
 	if value, ok := juo.mutation.Status(); ok {

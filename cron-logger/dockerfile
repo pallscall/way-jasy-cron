@@ -1,0 +1,21 @@
+FROM golang:latest
+
+MAINTAINER WayJasy 306698601@qq.com
+
+ENV GO111MODULE on
+ENV CGO_ENABLED 0
+ENV GOPROXY https://goproxy.cn
+
+RUN mkdir -p /go/app
+
+WORKDIR /go/app
+
+ADD . /go/app
+
+RUN cd /go/app/cron-logger/cmd && go build main.go
+
+EXPOSE 8002
+EXPOSE 9002
+
+ENTRYPOINT ["./cron-logger/cmd/main", "-conf=./cron-logger/configs"]
+

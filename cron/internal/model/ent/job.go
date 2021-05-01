@@ -34,8 +34,12 @@ type Job struct {
 	Body string `json:"body,omitempty"`
 	// Header holds the value of the "header" field.
 	Header string `json:"header,omitempty"`
-	// Stoppable holds the value of the "stoppable" field.
-	Stoppable int `json:"stoppable,omitempty"`
+	// Count holds the value of the "count" field.
+	Count int `json:"count,omitempty"`
+	// Retry holds the value of the "retry" field.
+	Retry int `json:"retry,omitempty"`
+	// RetryTemp holds the value of the "retry_temp" field.
+	RetryTemp int `json:"retry_temp,omitempty"`
 	// Status holds the value of the "status" field.
 	Status int `json:"status,omitempty"`
 	// Ctime holds the value of the "ctime" field.
@@ -49,7 +53,7 @@ func (*Job) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case job.FieldID, job.FieldStoppable, job.FieldStatus:
+		case job.FieldID, job.FieldCount, job.FieldRetry, job.FieldRetryTemp, job.FieldStatus:
 			values[i] = &sql.NullInt64{}
 		case job.FieldName, job.FieldCreator, job.FieldURL, job.FieldSpec, job.FieldComment, job.FieldUpdater, job.FieldMethod, job.FieldBody, job.FieldHeader:
 			values[i] = &sql.NullString{}
@@ -130,11 +134,23 @@ func (j *Job) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				j.Header = value.String
 			}
-		case job.FieldStoppable:
+		case job.FieldCount:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field stoppable", values[i])
+				return fmt.Errorf("unexpected type %T for field count", values[i])
 			} else if value.Valid {
-				j.Stoppable = int(value.Int64)
+				j.Count = int(value.Int64)
+			}
+		case job.FieldRetry:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field retry", values[i])
+			} else if value.Valid {
+				j.Retry = int(value.Int64)
+			}
+		case job.FieldRetryTemp:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field retry_temp", values[i])
+			} else if value.Valid {
+				j.RetryTemp = int(value.Int64)
 			}
 		case job.FieldStatus:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -200,8 +216,12 @@ func (j *Job) String() string {
 	builder.WriteString(j.Body)
 	builder.WriteString(", header=")
 	builder.WriteString(j.Header)
-	builder.WriteString(", stoppable=")
-	builder.WriteString(fmt.Sprintf("%v", j.Stoppable))
+	builder.WriteString(", count=")
+	builder.WriteString(fmt.Sprintf("%v", j.Count))
+	builder.WriteString(", retry=")
+	builder.WriteString(fmt.Sprintf("%v", j.Retry))
+	builder.WriteString(", retry_temp=")
+	builder.WriteString(fmt.Sprintf("%v", j.RetryTemp))
 	builder.WriteString(", status=")
 	builder.WriteString(fmt.Sprintf("%v", j.Status))
 	builder.WriteString(", ctime=")

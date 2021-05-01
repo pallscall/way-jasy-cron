@@ -118,6 +118,20 @@ func (mu *MachineUpdate) SetNillableCommand(s *string) *MachineUpdate {
 	return mu
 }
 
+// SetCreator sets the "creator" field.
+func (mu *MachineUpdate) SetCreator(s string) *MachineUpdate {
+	mu.mutation.SetCreator(s)
+	return mu
+}
+
+// SetNillableCreator sets the "creator" field if the given value is not nil.
+func (mu *MachineUpdate) SetNillableCreator(s *string) *MachineUpdate {
+	if s != nil {
+		mu.SetCreator(*s)
+	}
+	return mu
+}
+
 // SetStatus sets the "status" field.
 func (mu *MachineUpdate) SetStatus(i int) *MachineUpdate {
 	mu.mutation.ResetStatus()
@@ -302,6 +316,13 @@ func (mu *MachineUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: machine.FieldCommand,
 		})
 	}
+	if value, ok := mu.mutation.Creator(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: machine.FieldCreator,
+		})
+	}
 	if value, ok := mu.mutation.Status(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
@@ -447,6 +468,20 @@ func (muo *MachineUpdateOne) SetCommand(s string) *MachineUpdateOne {
 func (muo *MachineUpdateOne) SetNillableCommand(s *string) *MachineUpdateOne {
 	if s != nil {
 		muo.SetCommand(*s)
+	}
+	return muo
+}
+
+// SetCreator sets the "creator" field.
+func (muo *MachineUpdateOne) SetCreator(s string) *MachineUpdateOne {
+	muo.mutation.SetCreator(s)
+	return muo
+}
+
+// SetNillableCreator sets the "creator" field if the given value is not nil.
+func (muo *MachineUpdateOne) SetNillableCreator(s *string) *MachineUpdateOne {
+	if s != nil {
+		muo.SetCreator(*s)
 	}
 	return muo
 }
@@ -631,6 +666,13 @@ func (muo *MachineUpdateOne) sqlSave(ctx context.Context) (_node *Machine, err e
 			Type:   field.TypeString,
 			Value:  value,
 			Column: machine.FieldCommand,
+		})
+	}
+	if value, ok := muo.mutation.Creator(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: machine.FieldCreator,
 		})
 	}
 	if value, ok := muo.mutation.Status(); ok {

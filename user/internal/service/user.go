@@ -9,6 +9,7 @@ import (
 	"encoding/base64"
 	"encoding/pem"
 	log "github.com/sirupsen/logrus"
+	"way-jasy-cron/common/email"
 	"way-jasy-cron/user/ecode"
 	"way-jasy-cron/user/internal/model/ent"
 )
@@ -108,3 +109,21 @@ func (svc *Service) DecodePwd(ctx context.Context, user *ent.User) error{
 	return err
 }
 
+func (svc *Service) GetUserInfo(ctx context.Context, name string) (user *ent.User, err error) {
+	user, err = svc.ent.QueryUserInfo(ctx, name)
+	if err != nil {
+		log.Error("QueryUser err:%+v. method: GetUserInfo#user", err)
+		return nil, err
+	}
+	return
+}
+
+
+func (svc *Service) TestShow(ctx context.Context, rec string) (err error) {
+	m := email.NewEmail(svc.mail.Host, svc.mail.Username, svc.mail.Password, svc.mail.Port)
+	m.WithInfo("测试邮件", "毕设演示",[]string{rec})
+	if err = m.Send(); err != nil {
+		log.Error("send mail notice err:", err)
+	}
+	return err
+}

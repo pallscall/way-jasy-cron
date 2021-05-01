@@ -18,6 +18,19 @@ func (m *Manager) QueryUser(ctx context.Context, accessKey string) (*ent.User, e
 	return u, nil
 }
 
+func (m *Manager) QueryUserInfo(ctx context.Context, accessKey string) (*ent.User, error){
+	var u []*ent.User
+	err := m.Client.User.Query().Where(user.UsernameEQ(accessKey)).
+		Select(user.FieldUsername, user.FieldEmail, user.FieldTel).Scan(ctx, &u)
+	if ent.IsNotFound(err) {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, err
+	}
+	return u[0], nil
+}
+
 func (m *Manager) Register(ctx context.Context, u *ent.User) error {
 	_, err := m.Client.User.Update().SetEmail(u.Email).
 		SetPassword(u.Password).SetTel(u.Tel).Where(user.UsernameEQ(u.Username)).Save(ctx)

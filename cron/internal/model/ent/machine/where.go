@@ -134,6 +134,13 @@ func Command(v string) predicate.Machine {
 	})
 }
 
+// Creator applies equality check predicate on the "creator" field. It's identical to CreatorEQ.
+func Creator(v string) predicate.Machine {
+	return predicate.Machine(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldCreator), v))
+	})
+}
+
 // Status applies equality check predicate on the "status" field. It's identical to StatusEQ.
 func Status(v int) predicate.Machine {
 	return predicate.Machine(func(s *sql.Selector) {
@@ -783,6 +790,117 @@ func CommandEqualFold(v string) predicate.Machine {
 func CommandContainsFold(v string) predicate.Machine {
 	return predicate.Machine(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldCommand), v))
+	})
+}
+
+// CreatorEQ applies the EQ predicate on the "creator" field.
+func CreatorEQ(v string) predicate.Machine {
+	return predicate.Machine(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldCreator), v))
+	})
+}
+
+// CreatorNEQ applies the NEQ predicate on the "creator" field.
+func CreatorNEQ(v string) predicate.Machine {
+	return predicate.Machine(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldCreator), v))
+	})
+}
+
+// CreatorIn applies the In predicate on the "creator" field.
+func CreatorIn(vs ...string) predicate.Machine {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Machine(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldCreator), v...))
+	})
+}
+
+// CreatorNotIn applies the NotIn predicate on the "creator" field.
+func CreatorNotIn(vs ...string) predicate.Machine {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Machine(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldCreator), v...))
+	})
+}
+
+// CreatorGT applies the GT predicate on the "creator" field.
+func CreatorGT(v string) predicate.Machine {
+	return predicate.Machine(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldCreator), v))
+	})
+}
+
+// CreatorGTE applies the GTE predicate on the "creator" field.
+func CreatorGTE(v string) predicate.Machine {
+	return predicate.Machine(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldCreator), v))
+	})
+}
+
+// CreatorLT applies the LT predicate on the "creator" field.
+func CreatorLT(v string) predicate.Machine {
+	return predicate.Machine(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldCreator), v))
+	})
+}
+
+// CreatorLTE applies the LTE predicate on the "creator" field.
+func CreatorLTE(v string) predicate.Machine {
+	return predicate.Machine(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldCreator), v))
+	})
+}
+
+// CreatorContains applies the Contains predicate on the "creator" field.
+func CreatorContains(v string) predicate.Machine {
+	return predicate.Machine(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldCreator), v))
+	})
+}
+
+// CreatorHasPrefix applies the HasPrefix predicate on the "creator" field.
+func CreatorHasPrefix(v string) predicate.Machine {
+	return predicate.Machine(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldCreator), v))
+	})
+}
+
+// CreatorHasSuffix applies the HasSuffix predicate on the "creator" field.
+func CreatorHasSuffix(v string) predicate.Machine {
+	return predicate.Machine(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldCreator), v))
+	})
+}
+
+// CreatorEqualFold applies the EqualFold predicate on the "creator" field.
+func CreatorEqualFold(v string) predicate.Machine {
+	return predicate.Machine(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldCreator), v))
+	})
+}
+
+// CreatorContainsFold applies the ContainsFold predicate on the "creator" field.
+func CreatorContainsFold(v string) predicate.Machine {
+	return predicate.Machine(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldCreator), v))
 	})
 }
 

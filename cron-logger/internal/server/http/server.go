@@ -49,6 +49,11 @@ func initRouter(e *bm.Engine) {
 	{
 		g.GET("", listLog)
 	}
+
+	t := e.Group("/show")
+	{
+		t.GET("/test", show)
+	}
 }
 
 func ping(ctx *bm.Context) {

@@ -12,11 +12,11 @@ WORKDIR /go/app
 
 ADD . /go/app
 
-RUN cd /go/app/cron/cmd && go build main.go
+RUN cd /go/app/user/cmd && go build main.go
 
-EXPOSE 8000
-EXPOSE 9000
+EXPOSE 8001
+EXPOSE 9001
 
+ENTRYPOINT ["./user/cmd/main", "-conf=./user/configs"]
 
-ENTRYPOINT ["./cron/cmd/main", "-conf=./cron/configs"]
 

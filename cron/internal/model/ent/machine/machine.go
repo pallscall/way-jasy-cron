@@ -19,6 +19,8 @@ const (
 	FieldComment = "comment"
 	// FieldCommand holds the string denoting the command field in the database.
 	FieldCommand = "command"
+	// FieldCreator holds the string denoting the creator field in the database.
+	FieldCreator = "creator"
 	// FieldStatus holds the string denoting the status field in the database.
 	FieldStatus = "status"
 	// FieldCtime holds the string denoting the ctime field in the database.
@@ -39,6 +41,7 @@ var Columns = []string{
 	FieldPassword,
 	FieldComment,
 	FieldCommand,
+	FieldCreator,
 	FieldStatus,
 	FieldCtime,
 	FieldMtime,
@@ -67,6 +70,8 @@ var (
 	DefaultComment string
 	// DefaultCommand holds the default value on creation for the "command" field.
 	DefaultCommand string
+	// DefaultCreator holds the default value on creation for the "creator" field.
+	DefaultCreator string
 	// DefaultStatus holds the default value on creation for the "status" field.
 	DefaultStatus int
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.

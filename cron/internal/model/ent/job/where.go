@@ -155,10 +155,24 @@ func Header(v string) predicate.Job {
 	})
 }
 
-// Stoppable applies equality check predicate on the "stoppable" field. It's identical to StoppableEQ.
-func Stoppable(v int) predicate.Job {
+// Count applies equality check predicate on the "count" field. It's identical to CountEQ.
+func Count(v int) predicate.Job {
 	return predicate.Job(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldStoppable), v))
+		s.Where(sql.EQ(s.C(FieldCount), v))
+	})
+}
+
+// Retry applies equality check predicate on the "retry" field. It's identical to RetryEQ.
+func Retry(v int) predicate.Job {
+	return predicate.Job(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldRetry), v))
+	})
+}
+
+// RetryTemp applies equality check predicate on the "retry_temp" field. It's identical to RetryTempEQ.
+func RetryTemp(v int) predicate.Job {
+	return predicate.Job(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldRetryTemp), v))
 	})
 }
 
@@ -1182,22 +1196,22 @@ func HeaderContainsFold(v string) predicate.Job {
 	})
 }
 
-// StoppableEQ applies the EQ predicate on the "stoppable" field.
-func StoppableEQ(v int) predicate.Job {
+// CountEQ applies the EQ predicate on the "count" field.
+func CountEQ(v int) predicate.Job {
 	return predicate.Job(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldStoppable), v))
+		s.Where(sql.EQ(s.C(FieldCount), v))
 	})
 }
 
-// StoppableNEQ applies the NEQ predicate on the "stoppable" field.
-func StoppableNEQ(v int) predicate.Job {
+// CountNEQ applies the NEQ predicate on the "count" field.
+func CountNEQ(v int) predicate.Job {
 	return predicate.Job(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldStoppable), v))
+		s.Where(sql.NEQ(s.C(FieldCount), v))
 	})
 }
 
-// StoppableIn applies the In predicate on the "stoppable" field.
-func StoppableIn(vs ...int) predicate.Job {
+// CountIn applies the In predicate on the "count" field.
+func CountIn(vs ...int) predicate.Job {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1209,12 +1223,12 @@ func StoppableIn(vs ...int) predicate.Job {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldStoppable), v...))
+		s.Where(sql.In(s.C(FieldCount), v...))
 	})
 }
 
-// StoppableNotIn applies the NotIn predicate on the "stoppable" field.
-func StoppableNotIn(vs ...int) predicate.Job {
+// CountNotIn applies the NotIn predicate on the "count" field.
+func CountNotIn(vs ...int) predicate.Job {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1226,35 +1240,187 @@ func StoppableNotIn(vs ...int) predicate.Job {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldStoppable), v...))
+		s.Where(sql.NotIn(s.C(FieldCount), v...))
 	})
 }
 
-// StoppableGT applies the GT predicate on the "stoppable" field.
-func StoppableGT(v int) predicate.Job {
+// CountGT applies the GT predicate on the "count" field.
+func CountGT(v int) predicate.Job {
 	return predicate.Job(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldStoppable), v))
+		s.Where(sql.GT(s.C(FieldCount), v))
 	})
 }
 
-// StoppableGTE applies the GTE predicate on the "stoppable" field.
-func StoppableGTE(v int) predicate.Job {
+// CountGTE applies the GTE predicate on the "count" field.
+func CountGTE(v int) predicate.Job {
 	return predicate.Job(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldStoppable), v))
+		s.Where(sql.GTE(s.C(FieldCount), v))
 	})
 }
 
-// StoppableLT applies the LT predicate on the "stoppable" field.
-func StoppableLT(v int) predicate.Job {
+// CountLT applies the LT predicate on the "count" field.
+func CountLT(v int) predicate.Job {
 	return predicate.Job(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldStoppable), v))
+		s.Where(sql.LT(s.C(FieldCount), v))
 	})
 }
 
-// StoppableLTE applies the LTE predicate on the "stoppable" field.
-func StoppableLTE(v int) predicate.Job {
+// CountLTE applies the LTE predicate on the "count" field.
+func CountLTE(v int) predicate.Job {
 	return predicate.Job(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldStoppable), v))
+		s.Where(sql.LTE(s.C(FieldCount), v))
+	})
+}
+
+// RetryEQ applies the EQ predicate on the "retry" field.
+func RetryEQ(v int) predicate.Job {
+	return predicate.Job(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldRetry), v))
+	})
+}
+
+// RetryNEQ applies the NEQ predicate on the "retry" field.
+func RetryNEQ(v int) predicate.Job {
+	return predicate.Job(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldRetry), v))
+	})
+}
+
+// RetryIn applies the In predicate on the "retry" field.
+func RetryIn(vs ...int) predicate.Job {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Job(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldRetry), v...))
+	})
+}
+
+// RetryNotIn applies the NotIn predicate on the "retry" field.
+func RetryNotIn(vs ...int) predicate.Job {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Job(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldRetry), v...))
+	})
+}
+
+// RetryGT applies the GT predicate on the "retry" field.
+func RetryGT(v int) predicate.Job {
+	return predicate.Job(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldRetry), v))
+	})
+}
+
+// RetryGTE applies the GTE predicate on the "retry" field.
+func RetryGTE(v int) predicate.Job {
+	return predicate.Job(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldRetry), v))
+	})
+}
+
+// RetryLT applies the LT predicate on the "retry" field.
+func RetryLT(v int) predicate.Job {
+	return predicate.Job(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldRetry), v))
+	})
+}
+
+// RetryLTE applies the LTE predicate on the "retry" field.
+func RetryLTE(v int) predicate.Job {
+	return predicate.Job(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldRetry), v))
+	})
+}
+
+// RetryTempEQ applies the EQ predicate on the "retry_temp" field.
+func RetryTempEQ(v int) predicate.Job {
+	return predicate.Job(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldRetryTemp), v))
+	})
+}
+
+// RetryTempNEQ applies the NEQ predicate on the "retry_temp" field.
+func RetryTempNEQ(v int) predicate.Job {
+	return predicate.Job(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldRetryTemp), v))
+	})
+}
+
+// RetryTempIn applies the In predicate on the "retry_temp" field.
+func RetryTempIn(vs ...int) predicate.Job {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Job(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldRetryTemp), v...))
+	})
+}
+
+// RetryTempNotIn applies the NotIn predicate on the "retry_temp" field.
+func RetryTempNotIn(vs ...int) predicate.Job {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Job(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldRetryTemp), v...))
+	})
+}
+
+// RetryTempGT applies the GT predicate on the "retry_temp" field.
+func RetryTempGT(v int) predicate.Job {
+	return predicate.Job(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldRetryTemp), v))
+	})
+}
+
+// RetryTempGTE applies the GTE predicate on the "retry_temp" field.
+func RetryTempGTE(v int) predicate.Job {
+	return predicate.Job(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldRetryTemp), v))
+	})
+}
+
+// RetryTempLT applies the LT predicate on the "retry_temp" field.
+func RetryTempLT(v int) predicate.Job {
+	return predicate.Job(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldRetryTemp), v))
+	})
+}
+
+// RetryTempLTE applies the LTE predicate on the "retry_temp" field.
+func RetryTempLTE(v int) predicate.Job {
+	return predicate.Job(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldRetryTemp), v))
 	})
 }
 

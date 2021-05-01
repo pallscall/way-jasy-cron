@@ -25,8 +25,12 @@ const (
 	FieldBody = "body"
 	// FieldHeader holds the string denoting the header field in the database.
 	FieldHeader = "header"
-	// FieldStoppable holds the string denoting the stoppable field in the database.
-	FieldStoppable = "stoppable"
+	// FieldCount holds the string denoting the count field in the database.
+	FieldCount = "count"
+	// FieldRetry holds the string denoting the retry field in the database.
+	FieldRetry = "retry"
+	// FieldRetryTemp holds the string denoting the retry_temp field in the database.
+	FieldRetryTemp = "retry_temp"
 	// FieldStatus holds the string denoting the status field in the database.
 	FieldStatus = "status"
 	// FieldCtime holds the string denoting the ctime field in the database.
@@ -50,7 +54,9 @@ var Columns = []string{
 	FieldMethod,
 	FieldBody,
 	FieldHeader,
-	FieldStoppable,
+	FieldCount,
+	FieldRetry,
+	FieldRetryTemp,
 	FieldStatus,
 	FieldCtime,
 	FieldMtime,
@@ -85,8 +91,12 @@ var (
 	DefaultBody string
 	// DefaultHeader holds the default value on creation for the "header" field.
 	DefaultHeader string
-	// DefaultStoppable holds the default value on creation for the "stoppable" field.
-	DefaultStoppable int
+	// DefaultCount holds the default value on creation for the "count" field.
+	DefaultCount int
+	// DefaultRetry holds the default value on creation for the "retry" field.
+	DefaultRetry int
+	// DefaultRetryTemp holds the default value on creation for the "retry_temp" field.
+	DefaultRetryTemp int
 	// DefaultStatus holds the default value on creation for the "status" field.
 	DefaultStatus int
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.

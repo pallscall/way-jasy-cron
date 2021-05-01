@@ -50,12 +50,20 @@ func init() {
 	jobDescHeader := jobFields[9].Descriptor()
 	// job.DefaultHeader holds the default value on creation for the header field.
 	job.DefaultHeader = jobDescHeader.Default.(string)
-	// jobDescStoppable is the schema descriptor for stoppable field.
-	jobDescStoppable := jobFields[10].Descriptor()
-	// job.DefaultStoppable holds the default value on creation for the stoppable field.
-	job.DefaultStoppable = jobDescStoppable.Default.(int)
+	// jobDescCount is the schema descriptor for count field.
+	jobDescCount := jobFields[10].Descriptor()
+	// job.DefaultCount holds the default value on creation for the count field.
+	job.DefaultCount = jobDescCount.Default.(int)
+	// jobDescRetry is the schema descriptor for retry field.
+	jobDescRetry := jobFields[11].Descriptor()
+	// job.DefaultRetry holds the default value on creation for the retry field.
+	job.DefaultRetry = jobDescRetry.Default.(int)
+	// jobDescRetryTemp is the schema descriptor for retry_temp field.
+	jobDescRetryTemp := jobFields[12].Descriptor()
+	// job.DefaultRetryTemp holds the default value on creation for the retry_temp field.
+	job.DefaultRetryTemp = jobDescRetryTemp.Default.(int)
 	// jobDescStatus is the schema descriptor for status field.
-	jobDescStatus := jobFields[11].Descriptor()
+	jobDescStatus := jobFields[13].Descriptor()
 	// job.DefaultStatus holds the default value on creation for the status field.
 	job.DefaultStatus = jobDescStatus.Default.(int)
 	// jobDescID is the schema descriptor for id field.
@@ -88,8 +96,12 @@ func init() {
 	machineDescCommand := machineFields[6].Descriptor()
 	// machine.DefaultCommand holds the default value on creation for the command field.
 	machine.DefaultCommand = machineDescCommand.Default.(string)
+	// machineDescCreator is the schema descriptor for creator field.
+	machineDescCreator := machineFields[7].Descriptor()
+	// machine.DefaultCreator holds the default value on creation for the creator field.
+	machine.DefaultCreator = machineDescCreator.Default.(string)
 	// machineDescStatus is the schema descriptor for status field.
-	machineDescStatus := machineFields[7].Descriptor()
+	machineDescStatus := machineFields[8].Descriptor()
 	// machine.DefaultStatus holds the default value on creation for the status field.
 	machine.DefaultStatus = machineDescStatus.Default.(int)
 	// machineDescID is the schema descriptor for id field.

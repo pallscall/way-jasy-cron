@@ -10,3 +10,5 @@ CREATE TABLE `loggers`
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8 COMMENT ='操作日志表';
+
+

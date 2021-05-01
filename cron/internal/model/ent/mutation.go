@@ -42,8 +42,12 @@ type JobMutation struct {
 	method        *string
 	body          *string
 	header        *string
-	stoppable     *int
-	addstoppable  *int
+	count         *int
+	addcount      *int
+	retry         *int
+	addretry      *int
+	retry_temp    *int
+	addretry_temp *int
 	status        *int
 	addstatus     *int
 	ctime         *time.Time
@@ -463,60 +467,172 @@ func (m *JobMutation) ResetHeader() {
 	m.header = nil
 }
 
-// SetStoppable sets the "stoppable" field.
-func (m *JobMutation) SetStoppable(i int) {
-	m.stoppable = &i
-	m.addstoppable = nil
+// SetCount sets the "count" field.
+func (m *JobMutation) SetCount(i int) {
+	m.count = &i
+	m.addcount = nil
 }
 
-// Stoppable returns the value of the "stoppable" field in the mutation.
-func (m *JobMutation) Stoppable() (r int, exists bool) {
-	v := m.stoppable
+// Count returns the value of the "count" field in the mutation.
+func (m *JobMutation) Count() (r int, exists bool) {
+	v := m.count
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldStoppable returns the old "stoppable" field's value of the Job entity.
+// OldCount returns the old "count" field's value of the Job entity.
 // If the Job object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *JobMutation) OldStoppable(ctx context.Context) (v int, err error) {
+func (m *JobMutation) OldCount(ctx context.Context) (v int, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldStoppable is only allowed on UpdateOne operations")
+		return v, fmt.Errorf("OldCount is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldStoppable requires an ID field in the mutation")
+		return v, fmt.Errorf("OldCount requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldStoppable: %w", err)
+		return v, fmt.Errorf("querying old value for OldCount: %w", err)
 	}
-	return oldValue.Stoppable, nil
+	return oldValue.Count, nil
 }
 
-// AddStoppable adds i to the "stoppable" field.
-func (m *JobMutation) AddStoppable(i int) {
-	if m.addstoppable != nil {
-		*m.addstoppable += i
+// AddCount adds i to the "count" field.
+func (m *JobMutation) AddCount(i int) {
+	if m.addcount != nil {
+		*m.addcount += i
 	} else {
-		m.addstoppable = &i
+		m.addcount = &i
 	}
 }
 
-// AddedStoppable returns the value that was added to the "stoppable" field in this mutation.
-func (m *JobMutation) AddedStoppable() (r int, exists bool) {
-	v := m.addstoppable
+// AddedCount returns the value that was added to the "count" field in this mutation.
+func (m *JobMutation) AddedCount() (r int, exists bool) {
+	v := m.addcount
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// ResetStoppable resets all changes to the "stoppable" field.
-func (m *JobMutation) ResetStoppable() {
-	m.stoppable = nil
-	m.addstoppable = nil
+// ResetCount resets all changes to the "count" field.
+func (m *JobMutation) ResetCount() {
+	m.count = nil
+	m.addcount = nil
+}
+
+// SetRetry sets the "retry" field.
+func (m *JobMutation) SetRetry(i int) {
+	m.retry = &i
+	m.addretry = nil
+}
+
+// Retry returns the value of the "retry" field in the mutation.
+func (m *JobMutation) Retry() (r int, exists bool) {
+	v := m.retry
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldRetry returns the old "retry" field's value of the Job entity.
+// If the Job object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *JobMutation) OldRetry(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldRetry is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldRetry requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldRetry: %w", err)
+	}
+	return oldValue.Retry, nil
+}
+
+// AddRetry adds i to the "retry" field.
+func (m *JobMutation) AddRetry(i int) {
+	if m.addretry != nil {
+		*m.addretry += i
+	} else {
+		m.addretry = &i
+	}
+}
+
+// AddedRetry returns the value that was added to the "retry" field in this mutation.
+func (m *JobMutation) AddedRetry() (r int, exists bool) {
+	v := m.addretry
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetRetry resets all changes to the "retry" field.
+func (m *JobMutation) ResetRetry() {
+	m.retry = nil
+	m.addretry = nil
+}
+
+// SetRetryTemp sets the "retry_temp" field.
+func (m *JobMutation) SetRetryTemp(i int) {
+	m.retry_temp = &i
+	m.addretry_temp = nil
+}
+
+// RetryTemp returns the value of the "retry_temp" field in the mutation.
+func (m *JobMutation) RetryTemp() (r int, exists bool) {
+	v := m.retry_temp
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldRetryTemp returns the old "retry_temp" field's value of the Job entity.
+// If the Job object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *JobMutation) OldRetryTemp(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldRetryTemp is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldRetryTemp requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldRetryTemp: %w", err)
+	}
+	return oldValue.RetryTemp, nil
+}
+
+// AddRetryTemp adds i to the "retry_temp" field.
+func (m *JobMutation) AddRetryTemp(i int) {
+	if m.addretry_temp != nil {
+		*m.addretry_temp += i
+	} else {
+		m.addretry_temp = &i
+	}
+}
+
+// AddedRetryTemp returns the value that was added to the "retry_temp" field in this mutation.
+func (m *JobMutation) AddedRetryTemp() (r int, exists bool) {
+	v := m.addretry_temp
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetRetryTemp resets all changes to the "retry_temp" field.
+func (m *JobMutation) ResetRetryTemp() {
+	m.retry_temp = nil
+	m.addretry_temp = nil
 }
 
 // SetStatus sets the "status" field.
@@ -687,7 +803,7 @@ func (m *JobMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *JobMutation) Fields() []string {
-	fields := make([]string, 0, 13)
+	fields := make([]string, 0, 15)
 	if m.name != nil {
 		fields = append(fields, job.FieldName)
 	}
@@ -715,8 +831,14 @@ func (m *JobMutation) Fields() []string {
 	if m.header != nil {
 		fields = append(fields, job.FieldHeader)
 	}
-	if m.stoppable != nil {
-		fields = append(fields, job.FieldStoppable)
+	if m.count != nil {
+		fields = append(fields, job.FieldCount)
+	}
+	if m.retry != nil {
+		fields = append(fields, job.FieldRetry)
+	}
+	if m.retry_temp != nil {
+		fields = append(fields, job.FieldRetryTemp)
 	}
 	if m.status != nil {
 		fields = append(fields, job.FieldStatus)
@@ -753,8 +875,12 @@ func (m *JobMutation) Field(name string) (ent.Value, bool) {
 		return m.Body()
 	case job.FieldHeader:
 		return m.Header()
-	case job.FieldStoppable:
-		return m.Stoppable()
+	case job.FieldCount:
+		return m.Count()
+	case job.FieldRetry:
+		return m.Retry()
+	case job.FieldRetryTemp:
+		return m.RetryTemp()
 	case job.FieldStatus:
 		return m.Status()
 	case job.FieldCtime:
@@ -788,8 +914,12 @@ func (m *JobMutation) OldField(ctx context.Context, name string) (ent.Value, err
 		return m.OldBody(ctx)
 	case job.FieldHeader:
 		return m.OldHeader(ctx)
-	case job.FieldStoppable:
-		return m.OldStoppable(ctx)
+	case job.FieldCount:
+		return m.OldCount(ctx)
+	case job.FieldRetry:
+		return m.OldRetry(ctx)
+	case job.FieldRetryTemp:
+		return m.OldRetryTemp(ctx)
 	case job.FieldStatus:
 		return m.OldStatus(ctx)
 	case job.FieldCtime:
@@ -868,12 +998,26 @@ func (m *JobMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetHeader(v)
 		return nil
-	case job.FieldStoppable:
+	case job.FieldCount:
 		v, ok := value.(int)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetStoppable(v)
+		m.SetCount(v)
+		return nil
+	case job.FieldRetry:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetRetry(v)
+		return nil
+	case job.FieldRetryTemp:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetRetryTemp(v)
 		return nil
 	case job.FieldStatus:
 		v, ok := value.(int)
@@ -904,8 +1048,14 @@ func (m *JobMutation) SetField(name string, value ent.Value) error {
 // this mutation.
 func (m *JobMutation) AddedFields() []string {
 	var fields []string
-	if m.addstoppable != nil {
-		fields = append(fields, job.FieldStoppable)
+	if m.addcount != nil {
+		fields = append(fields, job.FieldCount)
+	}
+	if m.addretry != nil {
+		fields = append(fields, job.FieldRetry)
+	}
+	if m.addretry_temp != nil {
+		fields = append(fields, job.FieldRetryTemp)
 	}
 	if m.addstatus != nil {
 		fields = append(fields, job.FieldStatus)
@@ -918,8 +1068,12 @@ func (m *JobMutation) AddedFields() []string {
 // was not set, or was not defined in the schema.
 func (m *JobMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
-	case job.FieldStoppable:
-		return m.AddedStoppable()
+	case job.FieldCount:
+		return m.AddedCount()
+	case job.FieldRetry:
+		return m.AddedRetry()
+	case job.FieldRetryTemp:
+		return m.AddedRetryTemp()
 	case job.FieldStatus:
 		return m.AddedStatus()
 	}
@@ -931,12 +1085,26 @@ func (m *JobMutation) AddedField(name string) (ent.Value, bool) {
 // type.
 func (m *JobMutation) AddField(name string, value ent.Value) error {
 	switch name {
-	case job.FieldStoppable:
+	case job.FieldCount:
 		v, ok := value.(int)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.AddStoppable(v)
+		m.AddCount(v)
+		return nil
+	case job.FieldRetry:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddRetry(v)
+		return nil
+	case job.FieldRetryTemp:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddRetryTemp(v)
 		return nil
 	case job.FieldStatus:
 		v, ok := value.(int)
@@ -1014,8 +1182,14 @@ func (m *JobMutation) ResetField(name string) error {
 	case job.FieldHeader:
 		m.ResetHeader()
 		return nil
-	case job.FieldStoppable:
-		m.ResetStoppable()
+	case job.FieldCount:
+		m.ResetCount()
+		return nil
+	case job.FieldRetry:
+		m.ResetRetry()
+		return nil
+	case job.FieldRetryTemp:
+		m.ResetRetryTemp()
 		return nil
 	case job.FieldStatus:
 		m.ResetStatus()
@@ -1091,6 +1265,7 @@ type MachineMutation struct {
 	password      *string
 	comment       *string
 	command       *string
+	creator       *string
 	status        *int
 	addstatus     *int
 	ctime         *time.Time
@@ -1422,6 +1597,42 @@ func (m *MachineMutation) ResetCommand() {
 	m.command = nil
 }
 
+// SetCreator sets the "creator" field.
+func (m *MachineMutation) SetCreator(s string) {
+	m.creator = &s
+}
+
+// Creator returns the value of the "creator" field in the mutation.
+func (m *MachineMutation) Creator() (r string, exists bool) {
+	v := m.creator
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreator returns the old "creator" field's value of the Machine entity.
+// If the Machine object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MachineMutation) OldCreator(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldCreator is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldCreator requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreator: %w", err)
+	}
+	return oldValue.Creator, nil
+}
+
+// ResetCreator resets all changes to the "creator" field.
+func (m *MachineMutation) ResetCreator() {
+	m.creator = nil
+}
+
 // SetStatus sets the "status" field.
 func (m *MachineMutation) SetStatus(i int) {
 	m.status = &i
@@ -1590,7 +1801,7 @@ func (m *MachineMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *MachineMutation) Fields() []string {
-	fields := make([]string, 0, 9)
+	fields := make([]string, 0, 10)
 	if m.host != nil {
 		fields = append(fields, machine.FieldHost)
 	}
@@ -1608,6 +1819,9 @@ func (m *MachineMutation) Fields() []string {
 	}
 	if m.command != nil {
 		fields = append(fields, machine.FieldCommand)
+	}
+	if m.creator != nil {
+		fields = append(fields, machine.FieldCreator)
 	}
 	if m.status != nil {
 		fields = append(fields, machine.FieldStatus)
@@ -1638,6 +1852,8 @@ func (m *MachineMutation) Field(name string) (ent.Value, bool) {
 		return m.Comment()
 	case machine.FieldCommand:
 		return m.Command()
+	case machine.FieldCreator:
+		return m.Creator()
 	case machine.FieldStatus:
 		return m.Status()
 	case machine.FieldCtime:
@@ -1665,6 +1881,8 @@ func (m *MachineMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldComment(ctx)
 	case machine.FieldCommand:
 		return m.OldCommand(ctx)
+	case machine.FieldCreator:
+		return m.OldCreator(ctx)
 	case machine.FieldStatus:
 		return m.OldStatus(ctx)
 	case machine.FieldCtime:
@@ -1721,6 +1939,13 @@ func (m *MachineMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetCommand(v)
+		return nil
+	case machine.FieldCreator:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreator(v)
 		return nil
 	case machine.FieldStatus:
 		v, ok := value.(int)
@@ -1851,6 +2076,9 @@ func (m *MachineMutation) ResetField(name string) error {
 		return nil
 	case machine.FieldCommand:
 		m.ResetCommand()
+		return nil
+	case machine.FieldCreator:
+		m.ResetCreator()
 		return nil
 	case machine.FieldStatus:
 		m.ResetStatus()

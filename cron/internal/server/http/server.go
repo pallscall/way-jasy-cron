@@ -3,11 +3,11 @@ package http
 import (
 	"github.com/go-kratos/kratos/pkg/conf/paladin"
 	"github.com/go-kratos/kratos/pkg/net/rpc/warden"
+	"net/http"
+	"sync"
 	"way-jasy-cron/common/middleware"
 	utilerr "way-jasy-cron/common/util/err"
 	"way-jasy-cron/cron/internal/service"
-	"net/http"
-	"sync"
 
 	"github.com/go-kratos/kratos/pkg/log"
 	bm "github.com/go-kratos/kratos/pkg/net/http/blademaster"
@@ -62,6 +62,12 @@ func initRouter(e *bm.Engine) {
 			s.POST("/update", updateShellJob)
 			s.POST("/switch", switchShellJobStatus)
 			s.POST("/ping", connHost)
+		}
+
+		d := g.Group("dashboard")
+		{
+			d.GET("/todo",getNextCronJobList)
+			d.GET("/count",getJobCount)
 		}
 	}
 }

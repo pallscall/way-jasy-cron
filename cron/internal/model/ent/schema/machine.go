@@ -20,6 +20,7 @@ func (Machine) Fields() []ent.Field {
 		field.String("password").Default(""),
 		field.String("comment").Default(""),
 		field.String("command").Default(""),
+		field.String("creator").Default(""),
 		field.Int("status").Default(0),
 		field.Time("ctime").Optional(),
 		field.Time("mtime").Optional(),

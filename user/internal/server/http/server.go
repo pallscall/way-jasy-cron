@@ -4,6 +4,7 @@ import (
 	"github.com/go-kratos/kratos/pkg/conf/paladin"
 	"github.com/go-kratos/kratos/pkg/log"
 	bm "github.com/go-kratos/kratos/pkg/net/http/blademaster"
+	"github.com/go-kratos/kratos/pkg/net/http/blademaster/binding"
 	"github.com/go-kratos/kratos/pkg/net/rpc/warden"
 	"net/http"
 	"sync"
@@ -50,6 +51,8 @@ func initRouter(e *bm.Engine) {
 
 		g.GET("/pubKey", getPublicKey)
 		g.POST("/crypt", generateRSA)
+
+		g.GET("/info", getUserInfo)
 	}
 	t := e.Group("/test")
 	{
@@ -88,6 +91,11 @@ func MustStart(s *service.Service) {
 }
 
 func test(ctx *bm.Context) {
-	log.Info("ttttttttttttttttttttttttttttttest",1)
-	ctx.JSON(nil, nil)
+	var req struct{
+		Rec  string `json:"rec" form:"rec"`
+	}
+	if err := ctx.BindWith(&req, binding.JSON); err != nil {
+		return
+	}
+	ctx.JSON(nil, svc.TestShow(ctx, req.Rec))
 }

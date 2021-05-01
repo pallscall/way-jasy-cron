@@ -1,4 +1,4 @@
-CREATE TABLE `jobs`
+CREATE TABLE `users`
 (
     `id`            int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增 id',
     `username`      varchar(64)      NOT NULL DEFAULT '' COMMENT '昵称',
@@ -14,3 +14,7 @@ CREATE TABLE `jobs`
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8 COMMENT ='用户表';
+
+
+
+

@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
+	"time"
 
 	"net/http"
 	"strings"
 	"way-jasy-cron/common/ecron"
 	"way-jasy-cron/common/email"
-	utilpaladin "way-jasy-cron/common/util/paladin"
 	"way-jasy-cron/cron/ecode"
 	"way-jasy-cron/cron/internal/dao/mail"
 	"way-jasy-cron/cron/internal/model/ent"
@@ -69,18 +69,14 @@ type JobExecutor struct {
 	job *ent.Job
 	httpClient *http.Client
 	closer func(ctx context.Context, id, opt int) error
-	RetryCount     int
-	RetryTempCount int
 	email          *mail.Manager
 	logger func(ctx context.Context, msg, operator string) error
 }
 
 type Manager struct {
-	RetryCount int
 }
 
 type Config struct {
-	RetryCount int
 }
 
 func (c *Config) Filename() string {
@@ -88,10 +84,9 @@ func (c *Config) Filename() string {
 }
 
 func New() *Manager {
-	config := &Config{}
-	utilpaladin.MustUnmarshalTOML(config)
+	//config := &Config{}
+	//utilpaladin.MustUnmarshalTOML(config)
 	return &Manager{
-		RetryCount: config.RetryCount,
 	}
 }
 
@@ -106,8 +101,6 @@ func (m *Manager) Create(
 		job: job,
 		closer: closer,
 		httpClient: client,
-		RetryCount: m.RetryCount,
-		RetryTempCount: m.RetryCount,
 		email: email,
 		logger: logger,
 	}
@@ -133,21 +126,21 @@ func (j *JobExecutor) Run() {
 	)
 	defer func() {
 		if err != nil {
-			j.RetryCount--
-			if j.RetryCount == 0 {
+			j.job.Retry--
+			if j.job.Retry == 0 {
 				log.Info("close the job:", j.job)
 				if err = j.closer(context.TODO(), j.job.ID, int(JobStopping)); err != nil {
 					log.Error("method: Run#ent_ex/job err:",err)
 				}
 			}
 			m := email.NewEmail(j.email.Host, j.email.Username, j.email.Password, j.email.Port)
-			m.WithInfo("定时任务失败报警",fmt.Sprintf(errMsg, j.job.ID, j.job.Name), []string{j.job.Creator})
+			m.WithInfo("定时任务失败报警",fmt.Sprintf(errMsg, j.job.ID, j.job.Name), []string{"306698601@qq.com"})
 			if err := m.Send(); err != nil {
 				log.Error("send mail notice err:", err)
 			}
 			return
 		}
-		j.RetryCount = j.RetryTempCount
+		j.job.Retry = j.job.RetryTemp
 	}()
 	request, err = http.NewRequest(j.job.Method, j.job.URL, strings.NewReader(j.job.Body))
 	if err != nil {
@@ -157,6 +150,13 @@ func (j *JobExecutor) Run() {
 	_, err = j.httpClient.Do(request)
 	if err != nil {
 		log.Error("do request err:", err)
+		return
+	}
+	j.job.Count--
+	if j.job.Count == 0 {
+		if err = j.closer(context.TODO(), j.job.ID, int(JobStopping)); err != nil {
+			log.Error("method: Run#ent_ex/job err:",err)
+		}
 	}
 	return
 }
@@ -167,4 +167,9 @@ func (j *JobExecutor) EntryID() ecron.EntryID{
 
 func (j *JobExecutor) GetSpec() string{
 	return j.job.Spec
+}
+
+type ToDoList struct {
+	Name   string     `json:"name"`
+	DoTime time.Time  `json:"do_time"`
 }

@@ -148,3 +148,41 @@ func (svc *Service) WriteCronLogger(ctx context.Context, msg, operator string) (
 	_, err = svc.WriteLog(ctx, req)
 	return err
 }
+
+func (svc *Service) GetNextCronJobList(ctx context.Context) ([]ent_ex.ToDoList, error){
+	entries := svc.cron.Entries()
+	lenList := len(entries)
+	if lenList > 6 {
+		lenList = 6
+	}
+	todolist := make([]ent_ex.ToDoList, lenList)
+	for index, entry := range entries {
+		if index == 6 {
+			break
+		}
+		j, err := svc.ent.QueryJobByID(ctx, int(entry.ID))
+		if err != nil {
+			log.Error("QueryJobByID err: %v. method: GetNextCronJobList#service", err)
+			return nil, err
+		}
+		t := ent_ex.ToDoList{Name: j.Name, DoTime: entry.Next}
+		todolist[index] = t
+	}
+	return todolist, nil
+}
+
+func (svc *Service) GetJobCount(ctx context.Context, creator string) (int, error){
+	htotal, err := svc.ent.CountHttpJob(ctx, creator)
+	if err != nil {
+		log.Error("CountHttpJob err: %v. method: GetJobCount#service", err)
+		return 0, err
+	}
+	stotal, err := svc.ent.CountShellJob(ctx, creator)
+	if err != nil {
+		log.Error("CountShellJob err: %v. method: GetJobCount#service", err)
+		return 0, err
+	}
+	total := htotal + stotal
+	return total, nil
+
+}
